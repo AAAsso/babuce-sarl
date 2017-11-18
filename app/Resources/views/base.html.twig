@@ -93,6 +93,16 @@
 </div>
 
 <div class="container strip-box">
+        <div id="aaa-alert-messages" class="col-md-12">
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
 {% block body %}{% endblock %}
 </div>
 <footer class="footer">

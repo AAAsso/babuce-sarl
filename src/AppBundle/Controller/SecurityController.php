@@ -38,13 +38,13 @@ class SecurityController extends Controller
             else
             {
                 // Connection wrong password message - CHANGE MESSAGE AFTER TESTS !
-                $session->getFlashBag()->add('fail', 'Incorrect password ');
+                $session->getFlashBag()->add('danger', 'Incorrect password ');
             }
         }
         else
         {
             // Connection wrong username message - - CHANGE MESSAGE AFTER TESTS !
-            $session->getFlashBag()->add('fail', 'Incorrect username ');
+            $session->getFlashBag()->add('danger', 'Incorrect username ');
         }
         
         return $this->redirectToRoute('succubesarl');
