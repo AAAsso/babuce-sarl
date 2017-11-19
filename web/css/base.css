@@ -55,6 +55,16 @@ body > .container {
     font-size: 45px;
 }
 
+@media (max-width: 576px) {
+    #full-header #website-title {
+        font-size: 35px;
+    }
+}
+
 .strip-box {
     background-color: #ddd;
+}
+
+#body-box {
+    padding: 30px;
 }
