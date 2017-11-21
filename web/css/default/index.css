@@ -1,0 +1,7 @@
+#strip-container {
+    width: 100%;
+}
+
+#strip-container > img {
+    width: 100%;
+}
