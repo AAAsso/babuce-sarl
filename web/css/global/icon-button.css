@@ -1,0 +1,14 @@
+.succube-icon-button-lg > .oi {
+    width: 16px;
+    height: 16px;
+    margin: 0px;
+}
+
+.succube-icon-button-lg {
+    padding: 0px;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    line-height: 1;
+    padding-top: 9px;
+}

@@ -1,0 +1,11 @@
+#strip-container {
+    width: 100%;
+}
+
+#strip-container > img {
+    width: 100%;
+}
+
+#top-strip-navigation {
+    margin-bottom: 30px;
+}

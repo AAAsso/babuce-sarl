@@ -1,5 +1,40 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('css/default/index.css') }}" />{% endblock %}
+{% block javascripts %}<script type="text/javascript" src="{{ asset('js/index/index.js') }}"></script>{% endblock %}
+
+
 {% block body %}
-    
+    <div id="top-strip-navigation" class="row">
+        <div class="col text-center">
+            <a class="succube-icon-button-lg btn btn-outline-secondary" href="#" role="button">
+                <span class="oi oi-media-skip-backward"></span>
+            </a>
+        </div>
+        <div class="col text-center">
+            <a class="succube-icon-button-lg btn btn-outline-primary" href="#" role="button">
+                <span class="oi oi-caret-left"></span>
+            </a>
+        </div>
+        <div class="col text-center">
+            <a class="btn btn-outline-secondary" href="#" role="button">
+                <!-- share on mastodon -->
+            </a>
+        </div>
+        <div class="col text-center">
+            <a class="succube-icon-button-lg btn btn-outline-primary" href="#" role="button">
+                <span class="oi oi-caret-right"></span>
+            </a>
+        </div>
+        <div class="col text-center">
+            <a class="succube-icon-button-lg btn btn-outline-secondary" href="#" role="button">
+                <span class="oi oi-media-skip-forward"></span>
+            </a>
+        </div>
+    </div>
+    <div id="strip-container">
+        <img id="default-strip" class="align-self-end" src="{{ asset('images/default-strip.png') }}">
+    </div>
 {% endblock %}
