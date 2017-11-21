@@ -9,13 +9,3 @@
 #top-strip-navigation {
     margin-bottom: 30px;
 }
-
-#top-strip-navigation > div > button {
-    height: 40px;
-    width: 40px;
-    border-radius: 20px;
-    font-size: 10px;
-    padding: 0px;
-    text-align: center;
-}
-
