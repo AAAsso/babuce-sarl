@@ -7,6 +7,35 @@
 
 
 {% block body %}
+    <div id="top-strip-navigation" class="row">
+        <div class="col text-center">
+            <button type="button" class="btn btn-outline-secondary">
+                <span class="oi oi-chevron-left"></span>
+                <span class="oi oi-chevron-left"></span>
+            </button>
+        </div>
+        <div class="col text-center">
+            <button type="button" class="btn btn-outline-primary">
+                <span class="oi oi-chevron-left"></span>
+            </button>
+        </div>
+        <div class="col text-center">
+            <button type="button" class="btn btn-outline-secondary">
+                <!-- share on mastodon -->
+            </button>
+        </div>
+        <div class="col text-center">
+            <button type="button" class="btn btn-outline-primary">
+                <span class="oi oi-chevron-right"></span>
+            </button>
+        </div>
+        <div class="col text-center">
+            <button type="button" class="btn btn-outline-secondary">
+                <span class="oi oi-chevron-right"></span>
+                <span class="oi oi-chevron-right"></span>
+            </button>
+        </div>
+    </div>
     <div id="strip-container">
         <img id="default-strip" class="align-self-end" src="{{ asset('images/default-strip.png') }}">
     </div>
