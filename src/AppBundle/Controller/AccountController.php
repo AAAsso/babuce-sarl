@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Account;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Account controller.
@@ -45,10 +46,12 @@ class AccountController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            // TO DO give a creation dae to account
             $em->persist($account);
             $em->flush();
 
-            return $this->redirectToRoute('account_show', array('id' => $account->getId()));
+            // TO DO : flashbag to say that the account creation has worked
+            return $this->redirectToRoute('succubesarl');
         }
 
         return $this->render('account/new.html.twig', array(
