@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Your account{% endblock %}
+{% block title %}{{ shown_account.username }}{% endblock %}
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('css/account/details.css') }}" />{% endblock %}
 
 {% block body %}
@@ -11,48 +11,19 @@
             <img class="align-middle" src="{{ asset('images/default-avatar.png') }}">
         </div>
         <div class="row justify-content-center account-details username">
-            {{ account.username }}
+            {{ shown_account.username }}
         </div>
         <!-- update it when Account will have a parameter to set public email adress -->
         {% if false %}
         <div class="row justify-content-center account-details email">
-             <a href="mailto:{{ account.email }}?subject=From SuccubeSARL website&body=Hello!">{{ account.email }}</a>
+             <a href="mailto:{{ shown_account.email }}?subject=From SuccubeSARL website&body=Hello!">{{ shown_account.email }}</a>
         </div>
         {% endif %}
     </div>
 
     <div id="account-details-buttons" class="col-md-12">
-        {% if app.session.get('isConnected') && true %}
-        <a href="{{ path('account_edit', { 'username': account.username })}}" class="btn btn-primary float-right"><span class="oi oi-pencil"></span> Edit</a>
+        {% if app.session.get('isConnected') and account.id == shown_account.id %}
+            <a href="{{ path('account_edit', { 'username': shown_account.username })}}" class="btn btn-primary float-right"><span class="oi oi-pencil"></span> Edit</a>
         {% endif %}
     </div>
-
-    <div id="modal-confirmation-suppression">
-        <div id="modal-{{ account.username }}" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p>Do you really want to delette your account, {{ account.username }} ?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer text-left">
-                        <div class="row">
-                            <div class="col-md-6 text-left">
-                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Cancel</button>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                {{ form_start(delete_form) }}
-                                <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirm suppression</button>
-                                {{ form_end(delete_form) }}
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-    </div>
-
 {% endblock %}

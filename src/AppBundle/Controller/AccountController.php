@@ -75,7 +75,7 @@ class AccountController extends Controller
         $deleteForm = $this->createDeleteForm($account);
 
         return $this->render('account/show.html.twig', array(
-            'account' => $account,
+            'shown_account' => $account,
             'delete_form' => $deleteForm->createView(),
         ));
     }
