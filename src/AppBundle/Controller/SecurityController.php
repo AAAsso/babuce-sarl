@@ -49,6 +49,26 @@ class SecurityController extends Controller
         
         return $this->redirectToRoute('succubesarl');
     }
+    
+    /**
+     * @Route("/firstlogin", name="firstlogin")
+     */
+    public function firstloginAction($account)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $session = new Session();
+        
+        if (!is_null($account))
+        {
+            $session->getFlashBag()->add('success', 'Welcome '.$account->getUsername().', your account is created and you are now logged in.' );
+            $session->set('isConnected', true);
+            $session->set('account', $account);
+        }
+
+        return $this->redirectToRoute('succubesarl');
+        
+    }
 
     /**
      * @Route("/logout", name="logout")

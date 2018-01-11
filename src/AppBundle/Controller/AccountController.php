@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Account controller.
@@ -40,18 +41,21 @@ class AccountController extends Controller
      */
     public function newAction(Request $request)
     {
+        $session = new Session();
+        
         $account = new Account();
         $form = $this->createForm('AppBundle\Form\AccountType', $account);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            // TO DO give a creation dae to account
+            // TO DO give a creation date to account
             $em->persist($account);
             $em->flush();
 
-            // TO DO : flashbag to say that the account creation has worked
-            return $this->redirectToRoute('succubesarl');
+            $response = $this->forward('AppBundle:Security:firstlogin', array('account' => $account));
+            
+            return $response;
         }
 
         return $this->render('account/new.html.twig', array(

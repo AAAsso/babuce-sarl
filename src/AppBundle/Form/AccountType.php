@@ -20,8 +20,10 @@ class AccountType extends AbstractType
     {
         // Missing avatar and password change
         $builder
-                ->add('username', TextType::class, array('label' => 'Username'))
-                ->add('email', EmailType::class, array('label' => 'Email'))
+                ->add('username', TextType::class, array('label' => 'Username',
+                                                        'required' => true,))
+                ->add('email', EmailType::class, array('label' => 'Email',
+                                                        'required' => true,))
                 ->add('password', RepeatedType::class, array(
                     'label' => 'Password',
                     'type' => PasswordType::class,
