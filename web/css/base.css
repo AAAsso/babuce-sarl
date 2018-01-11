@@ -46,6 +46,10 @@ body > .container {
     top: 0;
 }
 
+#topmenu #register {
+    font-size: 12px;
+}
+
 #full-header #website-logo {
     max-height: 100px;
     width: auto;

@@ -92,11 +92,14 @@
                 </ul>
             {% else %}
                 <!-- Formulaire de connexion -->
-                <form class="form-inline my-2 my-lg-0" method="post" action="{{ path('login') }}">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Username" name="username">
-                    <input class="form-control mr-sm-2" type="password" placeholder="Password" name="password">
-                    <button class="btn my-2 my-sm-0" type="submit">Connexion</button>
-                </form>
+                <div>
+                    <form class="form-inline my-2 my-lg-0" method="post" action="{{ path('login') }}">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Username" name="username">
+                        <input class="form-control mr-sm-2" type="password" placeholder="Password" name="password">
+                        <button class="btn my-2 my-sm-0" type="submit">Login</button>
+                    </form>
+                    <a id="register" class="" href="{{ path('account_new') }}">I don't have an account yet</a>
+                </div>
             {% endif %}
         </div>
     </nav>
