@@ -77,9 +77,13 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="oi oi-person"></span> My account
+                            <img id="avatar" src="{{ asset('images/default-avatar.png') }}">
+                            {{ account.username }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item disabled" href="{{ path('account_show', { 'username': account.username }) }}">
+                                My profile
+                            </a>
                             <a class="dropdown-item disabled" href="{{ path('account_edit', { 'username': account.username }) }}">
                                 <span class="oi oi-cog"></span> Preferences
                             </a>

@@ -50,6 +50,16 @@ body > .container {
     font-size: 12px;
 }
 
+#topmenu #avatar {
+    margin-top: -8px;
+    margin-bottom: -8px;
+    margin-right: 5px;
+    border-radius: 40px;
+    border: 1px solid #ccc;
+    height: 40px;
+    width: 40px;
+}
+
 #full-header #website-logo {
     max-height: 100px;
     width: auto;
