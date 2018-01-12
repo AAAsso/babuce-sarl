@@ -17,21 +17,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class AccountController extends Controller
 {
     /**
-     * Lists all account entities.
-     *
-     * @Route("/", name="account_index")
-     * @Method("GET")
+     * For the page listing all account entities,
+     * Please see in the AdministrationController
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $accounts = $em->getRepository('AppBundle:Account')->findAll();
-
-        return $this->render('account/index.html.twig', array(
-            'accounts' => $accounts,
-        ));
-    }
 
     /**
      * Creates a new account entity.
