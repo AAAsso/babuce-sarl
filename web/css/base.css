@@ -68,6 +68,10 @@ body > .container {
 #full-header #website-title {
     font-family: 'Nothing You Could Do', cursive;
     font-size: 45px;
+    color: #212529;
+}
+#full-header a:hover {
+    text-decoration: none;
 }
 
 @media (max-width: 576px) {
