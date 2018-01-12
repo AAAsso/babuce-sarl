@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Account
@@ -36,9 +37,17 @@ class Account
     private $email;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+    
+    /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255)
+     * 64 characters long because using bcrypt encoding
+     * 
+     * @ORM\Column(name="password", type="string", length=64)
      */
     private $password;
 
@@ -54,7 +63,7 @@ class Account
      *
      * @ORM\Column(name="level", type="integer", options={"default" : 1})
      */
-    private $level;
+    private $level = 1;
     
 
     
@@ -115,7 +124,29 @@ class Account
     {
         return $this->email;
     }
+    
+    /**
+     * get plain password for encoding it
+     * 
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
 
+    /**
+     * set plain password for encoding it
+     * 
+     * @return Account
+     */
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
+        
+        return $this;
+    }
+    
     /**
      * Set password
      *
@@ -261,6 +292,5 @@ class Account
         return $this;
     }
     
-   
 }
 

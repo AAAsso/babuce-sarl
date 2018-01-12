@@ -24,7 +24,7 @@ class AccountType extends AbstractType
                                                         'required' => true,))
                 ->add('email', EmailType::class, array('label' => 'Email',
                                                         'required' => true,))
-                ->add('password', RepeatedType::class, array(
+                ->add('plainPassword', RepeatedType::class, array(
                     'label' => 'Password',
                     'type' => PasswordType::class,
                     'invalid_message' => 'The password fields must match.',

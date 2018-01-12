@@ -45,10 +45,15 @@ class AccountController extends Controller
         
         $account = new Account();
         $form = $this->createForm('AppBundle\Form\AccountType', $account);
+        
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $password = password_hash ($account->getPlainPassword() , PASSWORD_BCRYPT, array('cost'=>15) );
+            $account->setPassword($password);
+            $account->setPlainPassword(Null);
+            
             $em = $this->getDoctrine()->getManager();
+            
             // TO DO give a creation date to account
             $em->persist($account);
             $em->flush();

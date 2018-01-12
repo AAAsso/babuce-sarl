@@ -27,7 +27,7 @@ class SecurityController extends Controller
         {
             $password = $request->get('password');
             
-            if ($password === $account->getPassword())
+            if (password_verify ($password , $account->getPassword()))
             {
                 // Connection success message
                 $session->getFlashBag()->add('success', 'Welcome '.$account->getUsername());
