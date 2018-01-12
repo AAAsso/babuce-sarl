@@ -80,6 +80,7 @@
             {% if app.session.get('isConnected') %}
                 {% set account = app.session.get('account') %}
                 <ul class="navbar-nav">
+                    {% if account.isAdmin() %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Administration
@@ -90,6 +91,7 @@
                             </a>
                         </div>
                     </li>
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img id="avatar" src="{{ asset('images/default-avatar.png') }}">
