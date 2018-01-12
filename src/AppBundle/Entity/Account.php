@@ -49,7 +49,15 @@ class Account
      */
     private $avatar;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="level", type="integer", options={"default" : 1})
+     */
+    private $level;
+    
 
+    
     /**
      * Get id
      *
@@ -155,5 +163,104 @@ class Account
     {
         return $this->avatar;
     }
+    
+    /**
+     * Get level
+     *
+     * @return int
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+    
+    /**
+     * Is admin
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        if ($this->level >= 3)
+        {
+            return True;
+        }
+        else
+        {
+            return False;
+        }
+    }
+    
+    /**
+     * Is guest
+     *
+     * @return bool
+     */
+    public function isGuest()
+    {
+        if ($this->level >= 2)
+        {
+            return True;
+        }
+        else
+        {
+            return False;
+        }
+    }
+    
+    /**
+     * Is user
+     *
+     * @return bool
+     */
+    public function isUser()
+    {
+        if ($this->level >= 1)
+        {
+            return True;
+        }
+        else
+        {
+            return False;
+        }
+    }
+    
+    /**
+     * Set admin
+     *
+     * @return Account
+     */
+    public function setAdmin()
+    {
+        $this->level = 3;
+        
+        return $this;
+    }
+    
+    /**
+     * Set guest
+     *
+     * @return Account
+     */
+    public function setGuest()
+    {
+        $this->level = 2;
+        
+        return $this;
+    }
+    
+    /**
+     * Set user
+     *
+     * @return Account
+     */
+    public function setUser()
+    {
+        $this->level = 1;
+        
+        return $this;
+    }
+    
+   
 }
 
