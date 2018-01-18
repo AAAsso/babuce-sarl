@@ -59,6 +59,13 @@ class Account
     private $avatar;
 
     /**
+     * @var string
+     * 
+     * @ORM\Column(name="biography", type="string", length=2000, nullable=true)
+     */
+    private $biography;
+    
+    /**
      * @var integer
      *
      * @ORM\Column(name="level", type="integer", options={"default" : 1})
@@ -199,6 +206,30 @@ class Account
     public function getAvatar()
     {
         return $this->avatar;
+    }
+    
+    /**
+     * Set biography
+     *
+     * @param string biography
+     *
+     * @return Account
+     */
+    public function setBiography($biography)
+    {
+        $this->biography = $biography;
+
+        return $this;
+    }
+
+    /**
+     * Get biography
+     *
+     * @return string
+     */
+    public function getbiography()
+    {
+        return $this->biography;
     }
     
     /**
