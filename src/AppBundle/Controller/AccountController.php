@@ -36,13 +36,17 @@ class AccountController extends Controller
         
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            // Hashing password with bcrypt for storage
             $password = password_hash ($account->getPlainPassword() , PASSWORD_BCRYPT, array('cost'=>15) );
             $account->setPassword($password);
             $account->setPlainPassword(Null);
             
-            $em = $this->getDoctrine()->getManager();
+            // Registering a creation date for the account
+            $account->setRegisterDate(new \DateTime("now"));
             
-            // TO DO give a creation date to account
+            $em = $this->getDoctrine()->getManager();
+
+
             $em->persist($account);
             $em->flush();
 

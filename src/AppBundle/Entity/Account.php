@@ -59,13 +59,19 @@ class Account
     private $avatar;
 
     /**
-     * @var string
+     * @var integer
      *
      * @ORM\Column(name="level", type="integer", options={"default" : 1})
      */
     private $level = 1;
     
-
+    /**
+     * @var DateTime
+     * 
+     * @ORM\Column(name="registerDate", type="datetime")
+     */
+    private $registerDate;
+    
     
     /**
      * Get id
@@ -290,6 +296,30 @@ class Account
         $this->level = 1;
         
         return $this;
+    }
+    
+    /**
+     * Set registerDate
+     *
+     * @param DateTime $registerDate
+     *
+     * @return Account
+     */
+    public function setRegisterDate($registerDate)
+    {
+        $this->registerDate = $registerDate;
+
+        return $this;
+    }
+
+    /**
+     * Get registerDate
+     *
+     * @return DateTime
+     */
+    public function getRegisterDate()
+    {
+        return $this->$registerDate;
     }
     
 }
