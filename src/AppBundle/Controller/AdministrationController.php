@@ -25,7 +25,7 @@ class AdministrationController extends Controller
 
         $accounts = $em->getRepository('AppBundle:Account')->findAll();
 
-        return $this->render('account/index.html.twig', array(
+        return $this->render('account/list.html.twig', array(
             'accounts' => $accounts,
         ));
     }
