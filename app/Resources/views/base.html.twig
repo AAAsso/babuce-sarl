@@ -17,10 +17,12 @@
     {% block stylesheets %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+    <link rel="stylesheet" href="{{ asset('libraries/taaable/taaable.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/global/icon-button.css') }}" />
 </head>
 <body>
 {% block javascripts %}{% endblock %}
+<script src="{{ asset('libraries/taaable/taaable.js') }}"></script>
 
 <div id="full-header" class="container">
     <div class="row justify-content-center">

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manage users{% endblock %}
+{% block body %}
+    <table class="table table-hover aaa-table light">
+        <thead>
+            <tr>
+                <th class="aaa-id">Id</th>
+                <th class="aaa-icon" style="width: 15%">Avatar</th>
+                <th style="width: 30%">Username</th>
+                <th style="width: 55%">Email</th>
+                <th class="aaa-action"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for account in accounts %}
+            <tr
+                class="aaa-row-clickable"
+                data-url-show="{{ path('account_show', { 'username': account.username }) }}"
+                title="See user profile"
+                >
+                <td>{{ account.id }}</td>
+                <td class="aaa-picture">
+                    <img alt="avatar" src="{{ asset('images/default-avatar.png') }}"  />
+                </td>
+                <td>{{ account.username }}</td>
+                <td>{{ account.email }}</td>
+                <td class="aaa-button">
+                    <a 
+                        class="btn btn-primary"
+                        href="{{ path('account_edit', { 'username': account.username }) }}"
+                        role="button"
+                        title="Edit this account">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

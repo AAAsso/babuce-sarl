@@ -1,0 +1,107 @@
+.table.aaa-table {
+    table-layout: fixed;
+}
+
+.table.aaa-table.light {
+    background-color: white;
+}
+
+.table.aaa-table > tbody > tr > td,
+.table.aaa-table > tbody > tr > th,
+.table.aaa-table > tfoot > tr > td,
+.table.aaa-table > tfoot > tr > th,
+.table.aaa-table > thead > tr > td,
+.table.aaa-table > thead > tr > th {
+    height: 40px;
+    vertical-align: middle;
+}
+
+.table.aaa-table > tbody > tr > td.ellipsis,
+.table.aaa-table > tbody > tr > th.ellipsis,
+.table.aaa-table > tfoot > tr > td.ellipsis,
+.table.aaa-table > tfoot > tr > th.ellipsis,
+.table.aaa-table > thead > tr > td.ellipsis,
+.table.aaa-table > thead > tr > th.ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.table.aaa-table > tbody > tr > td.aaa-id,
+.table.aaa-table > tbody > tr > th.aaa-id,
+.table.aaa-table > tfoot > tr > td.aaa-id,
+.table.aaa-table > tfoot > tr > th.aaa-id,
+.table.aaa-table > thead > tr > td.aaa-id,
+.table.aaa-table > thead > tr > th.aaa-id {
+    width: 40px;
+}
+
+.table.aaa-table > tbody > tr > td.aaa-action,
+.table.aaa-table > tbody > tr > th.aaa-action,
+.table.aaa-table > tfoot > tr > td.aaa-action,
+.table.aaa-table > tfoot > tr > th.aaa-action,
+.table.aaa-table > thead > tr > td.aaa-action,
+.table.aaa-table > thead > tr > th.aaa-action {
+    width: 50px;
+}
+
+.table.aaa-table > tbody > tr > td.aaa-button,
+.table.aaa-table > tbody > tr > th.aaa-button,
+.table.aaa-table > tfoot > tr > td.aaa-button,
+.table.aaa-table > tfoot > tr > th.aaa-button,
+.table.aaa-table > thead > tr > td.aaa-button,
+.table.aaa-table > thead > tr > th.aaa-button {
+    padding-left: 0px;
+    padding-right: 0px;
+    text-align: center;
+}
+
+.table.aaa-table > tbody > tr > td.aaa-button > a.btn,
+.table.aaa-table > tbody > tr > th.aaa-button > a.btn,
+.table.aaa-table > tfoot > tr > td.aaa-button > a.btn,
+.table.aaa-table > tfoot > tr > th.aaa-button > a.btn,
+.table.aaa-table > thead > tr > td.aaa-button > a.btn,
+.table.aaa-table > thead > tr > th.aaa-button > a.btn {
+    padding: .375rem .63rem;
+}
+
+
+.table.aaa-table > tbody > tr > td.aaa-date,
+.table.aaa-table > tbody > tr > th.aaa-date,
+.table.aaa-table > tfoot > tr > td.aaa-date,
+.table.aaa-table > tfoot > tr > th.aaa-date,
+.table.aaa-table > thead > tr > td.aaa-date,
+.table.aaa-table > thead > tr > th.aaa-date {
+    text-align: center;
+    width: 105px;
+}
+
+.table.aaa-table > tbody > tr > td.aaa-icon,
+.table.aaa-table > tbody > tr > th.aaa-icon,
+.table.aaa-table > tfoot > tr > td.aaa-icon,
+.table.aaa-table > tfoot > tr > th.aaa-icon,
+.table.aaa-table > thead > tr > td.aaa-icon,
+.table.aaa-table > thead > tr > th.aaa-icon {
+    text-align: center;
+}
+
+.table.aaa-table > tbody > tr > td.aaa-picture > img,
+.table.aaa-table > tbody > tr > th.aaa-picture > img,
+.table.aaa-table > tfoot > tr > td.aaa-picture > img,
+.table.aaa-table > tfoot > tr > th.aaa-picture > img,
+.table.aaa-table > thead > tr > td.aaa-picture > img,
+.table.aaa-table > thead > tr > th.aaa-picture > img {
+    max-height: 40px;
+    width: auto;
+}
+
+.table.aaa-table > tbody > tr > td.aaa-icon > span,
+.table.aaa-table > tbody > tr > th.aaa-icon > span {
+    color: #999;
+}
+
+.table.aaa-table > tbody > tr.aaa-row-clickable,
+.table.aaa-table > tfoot > tr.aaa-row-clickable,
+.table.aaa-table > thead > tr.aaa-row-clickable {
+    cursor: pointer; cursor: hand;
+}
