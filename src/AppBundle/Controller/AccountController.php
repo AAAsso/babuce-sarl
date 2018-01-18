@@ -81,21 +81,32 @@ class AccountController extends Controller
      */
     public function editAction(Request $request, Account $account)
     {
-        $deleteForm = $this->createDeleteForm($account);
-        $editForm = $this->createForm('AppBundle\Form\AccountType', $account);
-        $editForm->handleRequest($request);
+        $session = new Session();
+        
+        if ($session->get('account')->getId() === $account->getId()){
+            $deleteForm = $this->createDeleteForm($account);
+            $editForm = $this->createForm('AppBundle\Form\AccountType', $account);
+            $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            if ($editForm->isSubmitted() && $editForm->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('account_edit', array('username' => $account->getUsername()));
+                return $this->redirectToRoute('account_edit', array('username' => $account->getUsername()));
+            }
+
+            return $this->render('account/edit.html.twig', array(
+                'account' => $account,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            ));
         }
-
-        return $this->render('account/edit.html.twig', array(
-            'account' => $account,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        else {
+            $session->getFlashBag()->add('danger', 'Access denied');
+            return $this->redirectToRoute('succubesarl');
+        }
+              
+        
+        
     }
 
     /**
