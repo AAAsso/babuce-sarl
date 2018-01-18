@@ -37,6 +37,13 @@ class Account
     private $email;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="emailIsPublic", type="boolean", options={"default" : 0})
+     */
+    private $emailIsPublic = 0;
+    
+    /**
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
@@ -136,6 +143,30 @@ class Account
     public function getEmail()
     {
         return $this->email;
+    }
+    
+    /**
+     * Set emailIsPublic
+     *
+     * @param boolean $emailIsPublic
+     *
+     * @return Account
+     */
+    public function setEmailIsPublic($emailIsPublic)
+    {
+        $this->emailIsPublic = $emailIsPublic;
+
+        return $this;
+    }
+
+    /**
+     * Get emailIsPublic
+     *
+     * @return boolean
+     */
+    public function getEmailIsPublic()
+    {
+        return $this->emailIsPublic;
     }
     
     /**
