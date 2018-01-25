@@ -14,10 +14,10 @@
             {{ shown_account.username }}
         </div>
         <!-- update it when Account will have a parameter to set public email adress -->
-        {% if false %}
-        <div class="row justify-content-center account-details email">
-             <a href="mailto:{{ shown_account.email }}?subject=From SuccubeSARL website&body=Hello!">{{ shown_account.email }}</a>
-        </div>
+        {% if shown_account.emailIsPublic %}
+            <div class="row justify-content-center account-details email">
+                 <a href="mailto:{{ shown_account.email }}?subject=From SuccubeSARL website&body=Hello!">{{ shown_account.email }}</a>
+            </div>
         {% endif %}
         <div class="row justify-content-center account-details biography">
             {% if shown_account.biography != "" %}
