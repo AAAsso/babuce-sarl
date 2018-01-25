@@ -381,7 +381,7 @@ class Account
      */
     public function getRegisterDate()
     {
-        return $this->$registerDate;
+        return $this->registerDate;
     }
     
 }

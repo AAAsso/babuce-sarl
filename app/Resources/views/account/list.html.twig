@@ -9,6 +9,7 @@
                 <th class="aaa-icon" style="width: 15%">Avatar</th>
                 <th style="width: 30%">Username</th>
                 <th style="width: 55%">Email</th>
+                <th class="aaa-date">Créé le</th>
                 <th class="aaa-action"></th>
             </tr>
         </thead>
@@ -25,6 +26,7 @@
                 </td>
                 <td>{{ account.username }}</td>
                 <td>{{ account.email }}</td>
+                <td class="aaa-date">{{ account.registerdate|localizeddate('none', 'none', 'fr_FR', null, 'd LLL Y') }}</td>
                 <td class="aaa-button">
                     <a 
                         class="btn btn-primary"
