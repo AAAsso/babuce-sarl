@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Contentwarnings list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contentWarning in contentWarnings %}
+            <tr>
+                <td><a href="{{ path('contentwarning_show', { 'label': contentWarning.label }) }}">{{ contentWarning.id }}</a></td>
+                <td>{{ contentWarning.label }}</td>
+                <td>{{ contentWarning.description }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('contentwarning_show', { 'label': contentWarning.label }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('contentwarning_new') }}">Create a new contentWarning</a>
+        </li>
+    </ul>
+{% endblock %}
