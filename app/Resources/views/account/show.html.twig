@@ -19,6 +19,13 @@
              <a href="mailto:{{ shown_account.email }}?subject=From SuccubeSARL website&body=Hello!">{{ shown_account.email }}</a>
         </div>
         {% endif %}
+        <div class="row justify-content-center account-details biography">
+            {% if shown_account.biography != "" %}
+                {{ shown_account.biography }}
+            {% else %}
+                <span class="empty-biography">This user did not provide a biography...</span>
+            {% endif %}
+        </div>
     </div>
 
     <div id="account-details-buttons" class="col-md-12">

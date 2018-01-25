@@ -16,3 +16,17 @@
 #account-details .account-details.email {
     font-size: 20px;
 }
+
+#account-details .account-details.biography {
+    font-size: 18px;
+    text-align: justify;
+    background-color: white;
+    padding: 15px 20px;
+    border: 1px solid #ccc;
+}
+
+#account-details .account-details.biography .empty-biography {
+    font-style: italic;
+    color: #aaa;
+}
+
