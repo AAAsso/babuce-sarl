@@ -87,7 +87,7 @@ class AccountController extends Controller
     {
         $session = new Session();
         
-        if ($session->get('account')->getId() === $account->getId() || $session->get('account')->isAdmin() === True){
+        if (($session->get('account') != Null) && ($session->get('account')->getId() === $account->getId() || $session->get('account')->isAdmin() === True)){
             $deleteForm = $this->createDeleteForm($account);
             $editForm = $this->createForm('AppBundle\Form\AccountType', $account);
             $editForm->handleRequest($request);

@@ -25,7 +25,7 @@ class AdministrationController extends Controller {
     public function listAccountAction() {
         $session = new Session();
 
-        if ($session->get('account')->isAdmin() === True) {
+        if ($session->get('account') != Null && $session->get('account')->isAdmin() === True) {
             $em = $this->getDoctrine()->getManager();
 
             $accounts = $em->getRepository('AppBundle:Account')->findAll();
@@ -48,7 +48,7 @@ class AdministrationController extends Controller {
     public function listContentWarningAction() {
         $session = new Session();
 
-        if ($session->get('account')->isAdmin() === True) {
+        if ($session->get('account') != Null && $session->get('account')->isAdmin() === True) {
             $em = $this->getDoctrine()->getManager();
 
             $contentWarnings = $em->getRepository('AppBundle:ContentWarning')->findAll();
@@ -71,7 +71,7 @@ class AdministrationController extends Controller {
     public function newAction(Request $request) {
         $session = new Session();
 
-        if ($session->get('account')->isAdmin() === True) {
+        if ($session->get('account') != Null && $session->get('account')->isAdmin() === True) {
             $contentWarning = new \AppBundle\Entity\ContentWarning();
             $form = $this->createForm('AppBundle\Form\ContentWarningType', $contentWarning);
             $form->handleRequest($request);
@@ -103,7 +103,7 @@ class AdministrationController extends Controller {
     public function editContentWarningAction(Request $request, ContentWarning $contentWarning) {
         $session = new Session();
 
-        if ($session->get('account')->isAdmin() === True) {
+        if ($session->get('account') != Null && $session->get('account')->isAdmin() === True) {
             $deleteForm = $this->createContentWarningDeleteForm($contentWarning);
             $editForm = $this->createForm('AppBundle\Form\ContentWarningType', $contentWarning);
             $editForm->handleRequest($request);
@@ -134,7 +134,7 @@ class AdministrationController extends Controller {
     public function deleteContentWarningAction(Request $request, ContentWarning $contentWarning) {
         $session = new Session();
 
-        if ($session->get('account')->isAdmin() === True) {
+        if ($session->get('account') != Null && $session->get('account')->isAdmin() === True) {
             $form = $this->createContentWarningDeleteForm($contentWarning);
             $form->handleRequest($request);
 
