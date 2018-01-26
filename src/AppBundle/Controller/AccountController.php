@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Form\FormError;
 
 /**
  * Account controller.
@@ -30,20 +31,20 @@ class AccountController extends Controller
     public function newAction(Request $request)
     {
         $session = new Session();
-        
+
         $account = new Account();
         $form = $this->createForm('AppBundle\Form\AccountType', $account);
-        
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // Hashing password with bcrypt for storage
             $password = password_hash ($account->getPlainPassword() , PASSWORD_BCRYPT, array('cost'=>15) );
             $account->setPassword($password);
             $account->setPlainPassword(Null);
-            
+
             // Registering a creation date for the account
             $account->setRegisterDate(new \DateTime("now"));
-            
+
             $em = $this->getDoctrine()->getManager();
 
 
@@ -51,13 +52,13 @@ class AccountController extends Controller
             $em->flush();
 
             $response = $this->forward('AppBundle:Security:firstlogin', array('account' => $account));
-            
+
             return $response;
         }
 
         return $this->render('account/new.html.twig', array(
-            'account' => $account,
-            'form' => $form->createView(),
+                'account' => $account,
+                'form' => $form->createView(),
         ));
     }
 
@@ -72,8 +73,8 @@ class AccountController extends Controller
         $deleteForm = $this->createDeleteForm($account);
 
         return $this->render('account/show.html.twig', array(
-            'shown_account' => $account,
-            'delete_form' => $deleteForm->createView(),
+                'shown_account' => $account,
+                'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -85,32 +86,49 @@ class AccountController extends Controller
      */
     public function editAction(Request $request, Account $account)
     {
-        $session = new Session();
-        
-        if (($session->get('account') != Null) && ($session->get('account')->getId() === $account->getId() || $session->get('account')->isAdmin() === True)){
-            $deleteForm = $this->createDeleteForm($account);
-            $editForm = $this->createForm('AppBundle\Form\AccountType', $account);
-            $editForm->handleRequest($request);
+        $session = $request->getSession();
 
-            if ($editForm->isSubmitted() && $editForm->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
-
-                return $this->redirectToRoute('account_edit', array('username' => $account->getUsername()));
-            }
-
-            return $this->render('account/edit.html.twig', array(
-                'account' => $account,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            ));
-        }
-        else {
-            $session->getFlashBag()->add('danger', 'Access denied');
+        if (is_null($session->get('account')) || !($session->get('account')->getId() === $account->getId() || $session->get('account')->isAdmin()))
+        {
+            $session->getFlashBag()->add('danger', 'Access denied.');
             return $this->redirectToRoute('succubesarl');
         }
-              
-        
-        
+
+        /**
+         * Form to edit general information
+         */
+        $editAccountGeneralInformationForm = $this->createForm('AppBundle\Form\AccountGeneralDataType', $account);
+        $editAccountGeneralInformationForm->handleRequest($request);
+
+        /**
+         * Form to edit password
+         */
+        $editAccountPasswordForm = $this->createForm('AppBundle\Form\AccountPasswordType', []);
+        $editAccountPasswordForm->handleRequest($request);
+
+        /**
+         * Form to delete the account
+         */
+        $deleteForm = $this->createDeleteForm($account);
+
+        // Handle the account form
+        if ($editAccountGeneralInformationForm->isSubmitted())
+        {
+            $this->handleGeneralInformationForm($request, $editAccountGeneralInformationForm);
+        }
+
+        // Handle the password form
+        if ($editAccountPasswordForm->isSubmitted())
+        {
+            $this->handleChangePasswordForm($request, $account, $editAccountPasswordForm);
+        }
+
+        return $this->render('account/edit.html.twig', [
+                'account' => $account,
+                'edit_form' => $editAccountGeneralInformationForm->createView(),
+                'edit_password_form' => $editAccountPasswordForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+        ]);
     }
 
     /**
@@ -128,9 +146,59 @@ class AccountController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($account);
             $em->flush();
+
+            $session = $request->getSession();
+            $session->clear();
+            $session->getFlashBag()->add('success', 'Your account have been deleted.');
+
+            return $this->redirectToRoute('succubesarl');
         }
 
-        return $this->redirectToRoute('account_index');
+        return $this->redirectToRoute('account_edit');
+    }
+
+    private function handleGeneralInformationForm(Request $request, $editAccountGeneralInformationForm)
+    {
+        $session = $request->getSession();
+        if (!$editAccountGeneralInformationForm->isValid())
+        {
+            $session->getFlashBag()->add('danger', 'Your iinformation have not been updated, please retry.');
+        }
+        else
+        {
+            $this->getDoctrine()->getManager()->flush();
+
+            $session->getFlashBag()->add('success', 'Your information have been updated.');
+        }
+    }
+
+    private function handleChangePasswordForm(Request $request, Account $account, $editAccountPasswordForm)
+    {
+        $session = $request->getSession();
+        if (!$editAccountPasswordForm->isValid())
+        {
+            $session->getFlashBag()->add('danger', 'Your password have not been updated, please retry.');
+        }
+        else
+        {
+            $oldUserPassword = $account->getPassword();
+            $oldPasswordSubmitted = $editAccountPasswordForm['old-password']->getData();
+            $newPasswordSubmitted = $editAccountPasswordForm['new-password']->getData();
+
+            if (password_verify($oldPasswordSubmitted, $oldUserPassword))
+            {
+                $newPassword = password_hash($newPasswordSubmitted, PASSWORD_BCRYPT, ['cost' => 15]);
+                $account->setPassword($newPassword);
+                $this->getDoctrine()->getManager()->flush();
+
+                $session->getFlashBag()->add('success', 'Your password have been updated.');
+            }
+            else
+            {
+                $editAccountPasswordForm->get('old-password')->addError(new FormError('Incorrect password.'));
+                $session->getFlashBag()->add('danger', 'Your password have not been updated, please retry.');
+            }
+        }
     }
 
     /**
@@ -143,9 +211,9 @@ class AccountController extends Controller
     private function createDeleteForm(Account $account)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('account_delete', array('id' => $account->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
+                ->setAction($this->generateUrl('account_delete', array('id' => $account->getId())))
+                ->setMethod('DELETE')
+                ->getForm()
         ;
     }
 }

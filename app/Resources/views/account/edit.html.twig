@@ -1,21 +1,59 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Edit profile{% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('css/account/edit.css') }}" />{% endblock %}
+{% block javascripts %}<script type="text/javascript" src="{{ asset('js/account/edit.js') }}"></script>{% endblock %}
+
 {% block body %}
-    <h1>Account edit</h1>
+    <div class="row">
+        <div class="col">
+            <h1>Account edit</h1>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-outline-success float-right" href="{{ path('account_show', { 'username': account.username }) }}">
+                <span class="oi oi-person"></span> See your profile
+            </a>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-8">
+            {{ form_start(edit_form) }}
+            {{ form_widget(edit_form) }}
+            {{ form_end(edit_form) }}
+        </div>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('account_show', { 'username': account.username }) }}">Back to your account</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        <div class="form-group col-md-4">
+            <div class="form-group">
+                <label class="form-control-label required" for="appbundle_account_username">Profile picture</label>
+                <img id="avatar" class="align-self-end" src="{{ asset('images/default-avatar.png') }}">
+                <input class="btn btn-outline-secondary btn-block" type="submit" value="Upload new picture">
+            </div>
+            <div class="form-group">
+                <input class="btn btn-outline-primary float-right" type="submit" value="Save changes">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h1>Password</h1>
+            {{ form_start(edit_password_form) }}
+            {{ form_widget(edit_password_form) }}
+            {{ form_end(edit_password_form) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h1>Danger zone</h1>
+            <div class="outline-danger">
+                {{ form_start(delete_form) }}
+                <p>
+                    <strong>Delete your account</strong><br />
+                    Once you delete an account, there is no going back. Please be certain.
+                </p>
+                <input class="btn btn-outline-danger float-right" type="submit" value="Delete my account">
+                {{ form_end(delete_form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
