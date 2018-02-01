@@ -44,12 +44,6 @@ class Account
     private $emailIsPublic = 0;
     
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=4096)
-     */
-    private $plainPassword;
-    
-    /**
      * @var string
      *
      * 64 characters long because using bcrypt encoding
@@ -167,28 +161,6 @@ class Account
     public function getEmailIsPublic()
     {
         return $this->emailIsPublic;
-    }
-    
-    /**
-     * get plain password for encoding it
-     * 
-     * @return string
-     */
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    /**
-     * set plain password for encoding it
-     * 
-     * @return Account
-     */
-    public function setPlainPassword($password)
-    {
-        $this->plainPassword = $password;
-        
-        return $this;
     }
     
     /**

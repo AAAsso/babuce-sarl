@@ -18,14 +18,15 @@ class AccountType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // Missing avatar and password change
+        // Missing avatar
         $builder
                 ->add('username', TextType::class, array('label' => 'Username',
                                                         'required' => true,))
                 ->add('email', EmailType::class, array('label' => 'Email',
                                                         'required' => true,))
-                ->add('plainPassword', RepeatedType::class, array(
+                ->add('password', RepeatedType::class, array(
                     'label' => 'Password',
+                    'mapped' => false,
                     'type' => PasswordType::class,
                     'invalid_message' => 'The password fields must match.',
                     'options' => array('attr' => array('class' => 'password-field')),
@@ -41,7 +42,8 @@ class AccountType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Account'
+            'data_class' => 'AppBundle\Entity\Account',
+            'allow_extra_fields' => true,
         ));
     }
 
