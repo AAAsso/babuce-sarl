@@ -53,9 +53,18 @@ class AdministrationController extends Controller {
 
             $contentWarnings = $em->getRepository('AppBundle:ContentWarning')->findAll();
 
-            return $this->render('contentwarning/list.html.twig', array(
-                        'contentWarnings' => $contentWarnings,
-            ));
+            $deleteForms = [];
+
+            foreach ($contentWarnings as $contentWarning)
+            {
+                $deleteForm = $this->createContentWarningDeleteForm($contentWarning);
+                $deleteForms[$contentWarning->getId()] = $deleteForm->createView();
+            }
+
+            return $this->render('contentwarning/list.html.twig', [
+                'contentWarnings' => $contentWarnings,
+                'delete_forms' => $deleteForms,
+            ]);
         } else {
             $session->getFlashBag()->add('danger', 'Access denied');
             return $this->redirectToRoute('succubesarl');

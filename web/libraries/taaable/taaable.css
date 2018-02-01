@@ -1,5 +1,6 @@
 .table.aaa-table {
     table-layout: fixed;
+    margin-bottom: 1em 0em;
 }
 
 .table.aaa-table.light {
@@ -65,6 +66,14 @@
     padding: .375rem .63rem;
 }
 
+.table.aaa-table > tbody > tr > td.aaa-button > button.btn,
+.table.aaa-table > tbody > tr > th.aaa-button > button.btn,
+.table.aaa-table > tfoot > tr > td.aaa-button > button.btn,
+.table.aaa-table > tfoot > tr > th.aaa-button > button.btn,
+.table.aaa-table > thead > tr > td.aaa-button > button.btn,
+.table.aaa-table > thead > tr > th.aaa-button > button.btn {
+    padding: .375rem .63rem;
+}
 
 .table.aaa-table > tbody > tr > td.aaa-date,
 .table.aaa-table > tbody > tr > th.aaa-date,
@@ -104,4 +113,16 @@
 .table.aaa-table > tfoot > tr.aaa-row-clickable,
 .table.aaa-table > thead > tr.aaa-row-clickable {
     cursor: pointer; cursor: hand;
+}
+
+div.aaa-table.aaa-new-button {
+    text-align: right !important;
+}
+
+div.aaa-table.aaa-new-button-top {
+    margin-bottom: 1em;
+}
+
+div.aaa-table.aaa-new-button-bottom {
+    margin-top: 1em;
 }
