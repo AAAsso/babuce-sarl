@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\ContentWarning;
+use AppBundle\Entity\Strip;
 
 /**
  * Administration controller.
@@ -16,6 +17,7 @@ use AppBundle\Entity\ContentWarning;
  */
 class AdministrationController extends Controller {
 
+// Methods for Account administration
     /**
      * Lists all account entities.
      *
@@ -39,6 +41,7 @@ class AdministrationController extends Controller {
         }
     }
 
+// Methods for Content Warnings Administration
     /**
      * Lists all contentWarning entities.
      *
@@ -137,7 +140,7 @@ class AdministrationController extends Controller {
     /**
      * Deletes a contentWarning entity.
      *
-     * @Route("/{id}", name="contentwarning_delete")
+     * @Route("/contentwarnings/{id}", name="contentwarning_delete")
      * @Method("DELETE")
      */
     public function deleteContentWarningAction(Request $request, ContentWarning $contentWarning) {
@@ -170,6 +173,139 @@ class AdministrationController extends Controller {
     private function createContentWarningDeleteForm(ContentWarning $contentWarning) {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('contentwarning_delete', array('id' => $contentWarning->getId())))
+                        ->setMethod('DELETE')
+                        ->getForm()
+        ;
+    }
+    
+// Methods for Stips administration    
+    /**
+     * Lists all strip entities.
+     *
+     * @Route("/strips", name="strip_list")
+     * @Method("GET")
+     */
+    public function listStripAction() {
+        $em = $this->getDoctrine()->getManager();
+
+        $strips = $em->getRepository('AppBundle:Strip')->findAll();
+
+        return $this->render('strip/list.html.twig', array(
+                    'strips' => $strips,
+        ));
+    }
+    
+    /**
+     * Creates a new strip entity.
+     *
+     * @Route("/strips/new", name="strip_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newStripAction(Request $request) {
+        $strip = new Strip();
+        $form = $this->createForm('AppBundle\Form\StripType', $strip);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * Process to gather images uploaded for the strip,
+             * save them with uniques names, and save those strings
+             * in strip attribute stripElements
+             */
+            $images = $strip->getStripElements();
+            $filenames = [];
+            foreach ($images as $image) {
+                $name = md5(uniqid()) . '.' . $image->guessExtension();
+                array_push($filenames, $name);
+                // Is moving image in loop going to break the loop ?
+                $image->move(
+                        $this->getParameter('strips_directory'), 
+                        $name
+                );
+            }
+            $strip->setStripElements($filenames);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($strip);
+            $em->flush();
+
+            return $this->redirectToRoute('strip_show', array('id' => $strip->getId()));
+        }
+
+        return $this->render('strip/new.html.twig', array(
+                    'strip' => $strip,
+                    'form' => $form->createView(),
+        ));
+    }
+    
+    /**
+     * Finds and displays a strip entity.
+     *
+     * @Route("strips/{id}", name="strip_show")
+     * @Method("GET")
+     */
+    public function showStripAction(Strip $strip) {
+        $deleteForm = $this->createDeleteForm($strip);
+
+        return $this->render('strip/show.html.twig', array(
+                    'strip' => $strip,
+                    'delete_form' => $deleteForm->createView(),
+        ));
+    }
+    
+    /**
+     * Displays a form to edit an existing strip entity.
+     *
+     * @Route("/strips/{id}/edit", name="strip_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editStripAction(Request $request, Strip $strip) {
+        $deleteForm = $this->createDeleteForm($strip);
+        $editForm = $this->createForm('AppBundle\Form\StripType', $strip);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('strip_edit', array('id' => $strip->getId()));
+        }
+
+        return $this->render('strip/edit.html.twig', array(
+                    'strip' => $strip,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Deletes a strip entity.
+     *
+     * @Route("/strips/{id}", name="strip_delete")
+     * @Method("DELETE")
+     */
+    public function deleteStripAction(Request $request, Strip $strip) {
+        $form = $this->createDeleteForm($strip);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($strip);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('strip_index');
+    }
+
+    /**
+     * Creates a form to delete a strip entity.
+     *
+     * @param Strip $strip The strip entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(Strip $strip) {
+        return $this->createFormBuilder()
+                        ->setAction($this->generateUrl('strip_delete', array('id' => $strip->getId())))
                         ->setMethod('DELETE')
                         ->getForm()
         ;

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Strips list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Creation Date</th>
+                <th>Publication Date</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Content Warnings</th>
+                <th>Stripelements</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for strip in strips %}
+                <tr>
+                    <td><a href="{{ path('strip_show', { 'id': strip.id }) }}">{{ strip.id }}</a></td>
+                    <td>{{ strip.creationDate|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ strip.publicationDate|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ strip.title }}</td>
+                    <td>{{ strip.author }}</td>
+                    <td>
+                        {% for contentWarning in strip.contentWarnings%} 
+                            <a href="{{ path('contentwarning_show', { 'label': contentWarning.label }) }}">{{ contentWarning.label }}</a> 
+                        {% endfor %}
+                    </td>
+                    <td>{{ strip.stripElements|join(', ') }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('strip_show', { 'id': strip.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('strip_edit', { 'id': strip.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('strip_new') }}">Create a new strip</a>
+        </li>
+    </ul>
+{% endblock %}
