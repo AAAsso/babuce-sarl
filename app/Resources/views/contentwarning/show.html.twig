@@ -22,8 +22,11 @@
             <a class="btn btn-outline-secondary mr-auto" href="{{ path('contentwarning_list') }}">
                 <span class="oi oi-chevron-left"></span> Back to the list
             </a>
-            <a class="btn btn-outline-primary" href="{{ path('contentwarning_administration_show', { 'label': contentWarning.label }) }}">
+            <a class="btn btn-outline-info mr-1" href="{{ path('contentwarning_administration_show', { 'label': contentWarning.label }) }}">
                 <span class="oi oi-bug"></span> See in administration
+            </a>
+            <a class="btn btn-outline-primary mr-0" href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}">
+                <span class="oi oi-pencil"></span> Edit
             </a>
         </div>
     {% endif %}
