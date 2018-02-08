@@ -15,43 +15,59 @@ use AppBundle\Entity\Strip;
  *
  * @Route("admin")
  */
-class AdministrationController extends Controller {
+class AdministrationController extends Controller
+{
+    /*
+     * ----------------------------------
+     * Methods for Account administration
+     * ----------------------------------
+     */
 
-// Methods for Account administration
     /**
      * Lists all account entities.
      *
      * @Route("/accounts", name="account_list")
      * @Method("GET")
      */
-    public function listAccountAction() {
+    public function listAccountAction()
+    {
         $session = new Session();
 
-        if ($session->get('account') != Null && $session->get('account')->isAdmin() === True) {
+        if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
+        {
             $em = $this->getDoctrine()->getManager();
 
             $accounts = $em->getRepository('AppBundle:Account')->findAll();
 
-            return $this->render('account/list.html.twig', array(
-                        'accounts' => $accounts,
-            ));
-        } else {
+            return $this->render('account/list.html.twig', [
+                    'accounts' => $accounts,
+            ]);
+        }
+        else
+        {
             $session->getFlashBag()->add('danger', 'Access denied');
             return $this->redirectToRoute('succubesarl');
         }
     }
 
-// Methods for Content Warnings Administration
+    /*
+     * -------------------------------------------
+     * Methods for Content Warnings Administration
+     * -------------------------------------------
+     */
+
     /**
      * Lists all contentWarning entities.
      *
      * @Route("/contentwarnings", name="contentwarning_list")
      * @Method("GET")
      */
-    public function listContentWarningAction() {
+    public function listContentWarningAction()
+    {
         $session = new Session();
 
-        if ($session->get('account') != Null && $session->get('account')->isAdmin() === True) {
+        if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
+        {
             $em = $this->getDoctrine()->getManager();
 
             $contentWarnings = $em->getRepository('AppBundle:ContentWarning')->findAll();
@@ -65,10 +81,12 @@ class AdministrationController extends Controller {
             }
 
             return $this->render('contentwarning/list.html.twig', [
-                'contentWarnings' => $contentWarnings,
-                'delete_forms' => $deleteForms,
+                    'contentWarnings' => $contentWarnings,
+                    'delete_forms' => $deleteForms,
             ]);
-        } else {
+        }
+        else
+        {
             $session->getFlashBag()->add('danger', 'Access denied');
             return $this->redirectToRoute('succubesarl');
         }
@@ -80,27 +98,32 @@ class AdministrationController extends Controller {
      * @Route("/contentwarnings/new", name="contentwarning_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request) {
+    public function newAction(Request $request)
+    {
         $session = new Session();
 
-        if ($session->get('account') != Null && $session->get('account')->isAdmin() === True) {
+        if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
+        {
             $contentWarning = new \AppBundle\Entity\ContentWarning();
             $form = $this->createForm('AppBundle\Form\ContentWarningType', $contentWarning);
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid())
+            {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($contentWarning);
                 $em->flush();
 
-                return $this->redirectToRoute('contentwarning_show', array('label' => $contentWarning->getLabel()));
+                return $this->redirectToRoute('contentwarning_show', ['label' => $contentWarning->getLabel()]);
             }
 
-            return $this->render('contentwarning/new.html.twig', array(
-                        'contentWarning' => $contentWarning,
-                        'form' => $form->createView(),
-            ));
-        } else {
+            return $this->render('contentwarning/new.html.twig', [
+                    'contentWarning' => $contentWarning,
+                    'form' => $form->createView(),
+            ]);
+        }
+        else
+        {
             $session->getFlashBag()->add('danger', 'Access denied');
             return $this->redirectToRoute('succubesarl');
         }
@@ -112,26 +135,31 @@ class AdministrationController extends Controller {
      * @Route("/contentwarnings/{label}/edit", name="contentwarning_edit")
      * @Method({"GET", "POST"})
      */
-    public function editContentWarningAction(Request $request, ContentWarning $contentWarning) {
+    public function editContentWarningAction(Request $request, ContentWarning $contentWarning)
+    {
         $session = new Session();
 
-        if ($session->get('account') != Null && $session->get('account')->isAdmin() === True) {
+        if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
+        {
             $deleteForm = $this->createContentWarningDeleteForm($contentWarning);
             $editForm = $this->createForm('AppBundle\Form\ContentWarningType', $contentWarning);
             $editForm->handleRequest($request);
 
-            if ($editForm->isSubmitted() && $editForm->isValid()) {
+            if ($editForm->isSubmitted() && $editForm->isValid())
+            {
                 $this->getDoctrine()->getManager()->flush();
 
-                return $this->redirectToRoute('contentwarning_edit', array('label' => $contentWarning->getLabel()));
+                return $this->redirectToRoute('contentwarning_edit', ['label' => $contentWarning->getLabel()]);
             }
 
-            return $this->render('contentwarning/edit.html.twig', array(
-                        'contentWarning' => $contentWarning,
-                        'edit_form' => $editForm->createView(),
-                        'delete_form' => $deleteForm->createView(),
-            ));
-        } else {
+            return $this->render('contentwarning/edit.html.twig', [
+                    'contentWarning' => $contentWarning,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+            ]);
+        }
+        else
+        {
             $session->getFlashBag()->add('danger', 'Access denied');
             return $this->redirectToRoute('succubesarl');
         }
@@ -143,21 +171,26 @@ class AdministrationController extends Controller {
      * @Route("/contentwarnings/{id}", name="contentwarning_delete")
      * @Method("DELETE")
      */
-    public function deleteContentWarningAction(Request $request, ContentWarning $contentWarning) {
+    public function deleteContentWarningAction(Request $request, ContentWarning $contentWarning)
+    {
         $session = new Session();
 
-        if ($session->get('account') != Null && $session->get('account')->isAdmin() === True) {
+        if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
+        {
             $form = $this->createContentWarningDeleteForm($contentWarning);
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid())
+            {
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($contentWarning);
                 $em->flush();
             }
 
             return $this->redirectToRoute('contentwarning_list');
-        } else {
+        }
+        else
+        {
             $session->getFlashBag()->add('danger', 'Access denied');
             return $this->redirectToRoute('succubesarl');
         }
@@ -170,43 +203,52 @@ class AdministrationController extends Controller {
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createContentWarningDeleteForm(ContentWarning $contentWarning) {
+    private function createContentWarningDeleteForm(ContentWarning $contentWarning)
+    {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('contentwarning_delete', array('id' => $contentWarning->getId())))
-                        ->setMethod('DELETE')
-                        ->getForm()
+                ->setAction($this->generateUrl('contentwarning_delete', ['id' => $contentWarning->getId()]))
+                ->setMethod('DELETE')
+                ->getForm()
         ;
     }
-    
-// Methods for Stips administration    
+
+    /*
+     * --------------------------------
+     * Methods for Stips administration
+     * --------------------------------
+     */
+
     /**
      * Lists all strip entities.
      *
      * @Route("/strips", name="strip_list")
      * @Method("GET")
      */
-    public function listStripAction() {
+    public function listStripAction()
+    {
         $em = $this->getDoctrine()->getManager();
 
         $strips = $em->getRepository('AppBundle:Strip')->findAll();
 
-        return $this->render('strip/list.html.twig', array(
-                    'strips' => $strips,
-        ));
+        return $this->render('strip/list.html.twig', [
+                'strips' => $strips,
+        ]);
     }
-    
+
     /**
      * Creates a new strip entity.
      *
      * @Route("/strips/new", name="strip_new")
      * @Method({"GET", "POST"})
      */
-    public function newStripAction(Request $request) {
+    public function newStripAction(Request $request)
+    {
         $strip = new Strip();
         $form = $this->createForm('AppBundle\Form\StripType', $strip);
         $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
             /**
              * Process to gather images uploaded for the strip,
              * save them with uniques names, and save those strings
@@ -214,13 +256,13 @@ class AdministrationController extends Controller {
              */
             $images = $strip->getStripElements();
             $filenames = [];
-            foreach ($images as $image) {
+            foreach ($images as $image)
+            {
                 $name = md5(uniqid()) . '.' . $image->guessExtension();
                 array_push($filenames, $name);
                 // Is moving image in loop going to break the loop ?
                 $image->move(
-                        $this->getParameter('strips_directory'), 
-                        $name
+                    $this->getParameter('strips_directory'), $name
                 );
             }
             $strip->setStripElements($filenames);
@@ -229,52 +271,55 @@ class AdministrationController extends Controller {
             $em->persist($strip);
             $em->flush();
 
-            return $this->redirectToRoute('strip_show', array('id' => $strip->getId()));
+            return $this->redirectToRoute('strip_show', ['id' => $strip->getId()]);
         }
 
-        return $this->render('strip/new.html.twig', array(
-                    'strip' => $strip,
-                    'form' => $form->createView(),
-        ));
+        return $this->render('strip/new.html.twig', [
+                'strip' => $strip,
+                'form' => $form->createView(),
+        ]);
     }
-    
+
     /**
      * Finds and displays a strip entity.
      *
      * @Route("strips/{id}", name="strip_show")
      * @Method("GET")
      */
-    public function showStripAction(Strip $strip) {
+    public function showStripAction(Strip $strip)
+    {
         $deleteForm = $this->createDeleteForm($strip);
 
-        return $this->render('strip/show.html.twig', array(
-                    'strip' => $strip,
-                    'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('strip/show.html.twig', [
+                'strip' => $strip,
+                'delete_form' => $deleteForm->createView(),
+        ]);
     }
-    
+
     /**
      * Displays a form to edit an existing strip entity.
      *
      * @Route("/strips/{id}/edit", name="strip_edit")
      * @Method({"GET", "POST"})
      */
-    public function editStripAction(Request $request, Strip $strip) {
+    public function editStripAction(Request $request, Strip $strip)
+    {
         $deleteForm = $this->createDeleteForm($strip);
         $editForm = $this->createForm('AppBundle\Form\StripType', $strip);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('strip_edit', array('id' => $strip->getId()));
+            return $this->redirectToRoute('strip_edit', ['id' => $strip->getId()]);
         }
 
-        return $this->render('strip/edit.html.twig', array(
-                    'strip' => $strip,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('strip/edit.html.twig', [
+                'strip' => $strip,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+        ]);
     }
 
     /**
@@ -283,11 +328,13 @@ class AdministrationController extends Controller {
      * @Route("/strips/{id}", name="strip_delete")
      * @Method("DELETE")
      */
-    public function deleteStripAction(Request $request, Strip $strip) {
+    public function deleteStripAction(Request $request, Strip $strip)
+    {
         $form = $this->createDeleteForm($strip);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($strip);
             $em->flush();
@@ -303,11 +350,12 @@ class AdministrationController extends Controller {
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Strip $strip) {
+    private function createDeleteForm(Strip $strip)
+    {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('strip_delete', array('id' => $strip->getId())))
-                        ->setMethod('DELETE')
-                        ->getForm()
+                ->setAction($this->generateUrl('strip_delete', ['id' => $strip->getId()]))
+                ->setMethod('DELETE')
+                ->getForm()
         ;
     }
 
