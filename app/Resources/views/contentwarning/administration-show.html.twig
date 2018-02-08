@@ -27,29 +27,21 @@
             <dt>Label</dt>
             <dd>{{ contentWarning.label }}</dd>
             <dt>Description</dt>
-            <dd>
+            <dd class="content-warning-description last-field">
                 {{ contentWarning.description }}
             </dd>
         </dl>
     </div>
 
-    <div class="details-footer">
+    <div class="details-footer btn-toolbar">
         <a class="btn btn-outline-secondary mr-auto" href="{{ path('contentwarning_list') }}">
             <span class="oi oi-chevron-left"></span> Back to the list
         </a>
-        <a class="btn btn-outline-info" href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}">
+        <a class="btn btn-outline-info mr-1" href="{{ path('contentwarning_show', { 'label': contentWarning.label }) }}">
             <span class="oi oi-globe"></span> See public version
         </a>
-        <a class="btn btn-outline-primary" href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}">
+        <a class="btn btn-outline-primary mr-0" href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}">
             <span class="oi oi-pencil"></span> Edit
         </a>
     </div>
-    <ul>
-        <li>
-            <a href="{{ path('contentwarning_list') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}">Edit</a>
-        </li>
-    </ul>
 {% endblock %}

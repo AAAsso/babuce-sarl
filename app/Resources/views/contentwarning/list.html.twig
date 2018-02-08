@@ -17,6 +17,7 @@
                 <th class="aaa-date">Créé le</th>
                 <th class="aaa-action"></th>
                 <th class="aaa-action"></th>
+                <th class="aaa-action"></th>
             </tr>
         </thead>
         <tbody>
@@ -43,6 +44,15 @@
                         role="button"
                         title="Edit this content warning">
                         <span class="oi oi-pencil"></span>
+                    </a>
+                </td>
+                <td class="aaa-button">
+                    <a
+                        class="btn btn-outline-info"
+                        href="{{ path('contentwarning_administration_show', { 'label': contentWarning.label }) }}"
+                        role="button"
+                        title="See in administration">
+                        <span class="oi oi-bug"></span>
                     </a>
                 </td>
                 <td class="aaa-button">

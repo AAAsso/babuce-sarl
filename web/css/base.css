@@ -87,3 +87,8 @@ body > .container {
 #body-box {
     padding: 30px;
 }
+
+.details-footer {
+    display: flex;
+    margin-top: 1em;
+}

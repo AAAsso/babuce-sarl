@@ -1,0 +1,21 @@
+#content-warning-details {
+    font-size: 18px;
+    text-align: justify;
+    background-color: white;
+    padding: 15px 20px;
+    border: 1px solid #ccc;
+}
+
+#content-warning-details > dl > dd {
+    margin-bottom: 2em;
+}
+
+#content-warning-details > dl > dd.content-warning-description {
+    padding: 15px 20px;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+}
+
+#content-warning-details > dl > dd.last-field {
+    margin-bottom: 0em;
+}

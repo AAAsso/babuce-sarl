@@ -93,12 +93,25 @@ class AdministrationController extends Controller
     }
 
     /**
+     * Finds and displays a contentWarning entity.
+     *
+     * @Route("/contentwarning/{label}", name="contentwarning_administration_show")
+     * @Method("GET")
+     */
+    public function showContentWarningAction(ContentWarning $contentWarning)
+    {
+        return $this->render('contentwarning/administration-show.html.twig', [
+                'contentWarning' => $contentWarning,
+        ]);
+    }
+
+    /**
      * Creates a new contentWarning entity.
      *
      * @Route("/contentwarnings/new", name="contentwarning_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newContentWarningAction(Request $request)
     {
         $session = new Session();
 

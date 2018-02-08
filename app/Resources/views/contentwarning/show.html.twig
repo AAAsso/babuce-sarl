@@ -1,31 +1,28 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ contentWarning.label }}{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/content-warning/details.css') }}" />
+{% endblock %}
+
 {% block body %}
-    <h1>Contentwarning</h1>
+    <div id="content-warning-details">
+        <dl class="dl-horizontal">
+            <dt>Label</dt>
+            <dd>{{ contentWarning.label }}</dd>
+            <dt>Description</dt>
+            <dd class="content-warning-description last-field">
+                {{ contentWarning.description }}
+            </dd>
+        </dl>
+    </div>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ contentWarning.id }}</td>
-            </tr>
-            <tr>
-                <th>Label</th>
-                <td>{{ contentWarning.label }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ contentWarning.description }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('contentwarning_list') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}">Edit</a>
-        </li>
-    </ul>
+    <div class="btn-toolbar details-footer">
+        <a class="btn btn-outline-secondary mr-auto" href="{{ path('contentwarning_list') }}">
+            <span class="oi oi-chevron-left"></span> Back to the list
+        </a>
+        <a class="btn btn-outline-primary" href="{{ path('contentwarning_administration_show', { 'label': contentWarning.label }) }}">
+            <span class="oi oi-bug"></span> See in administration
+        </a>
+    </div>
 {% endblock %}
