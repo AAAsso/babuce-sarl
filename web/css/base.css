@@ -88,6 +88,16 @@ body > .container {
     padding: 30px;
 }
 
+#body-box > #alert-messages {
+    margin: 0px -30px;
+    box-shadow: 0px 0px 20px -10px #000;
+}
+
+#body-box > #alert-messages > .alert {
+    border: none;
+    border-radius: 0px;
+}
+
 .details-footer {
     display: flex;
     margin-top: 1em;

@@ -134,19 +134,19 @@
     </nav>
 </div>
 
-<div id="aaa-alert-messages" class="col-md-12">
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert alert-{{ type }} alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
-</div>
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div id="body-box" class="col-sm-12 col-md-8 col-lg-6 strip-box">
+            <div id="alert-messages">
+                {% for type, messages in app.session.flashbag.all() %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
         {% block body %}{% endblock %}
     </div>
 </div>
