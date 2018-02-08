@@ -49,7 +49,7 @@
                     <button
                         class="btn btn-outline-danger"
                         data-toggle="modal"
-                        data-target="#modal-{{ contentWarning.label }}"
+                        data-target="#modal-{{ contentWarning.id }}"
                         title="Delete this content warning">
                         <span class="oi oi-trash"></span>
                     </button>
@@ -68,7 +68,7 @@
     <div id="modals-deletion-confirmation">
         {% for contentWarning in contentWarnings %}
             {% set delete_form = delete_forms[contentWarning.id] %}
-            <div id="modal-{{ contentWarning.label }}" class="modal fade" tabindex="-1" role="dialog">
+            <div id="modal-{{ contentWarning.id }}" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -78,21 +78,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer text-left">
-                            <div class="row">
-                                <div class="col-md-6 text-left">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Cancel</button>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    {{ form_start(delete_form) }}
-                                    <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Yes, delete</button>
-                                    {{ form_end(delete_form) }}
-                                </div>
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">
+                                <span class="oi oi-chevron-left"></span> Cancel
+                            </button>
+                            {{ form_start(delete_form) }}
+                                <button class="btn btn-danger" type="submit">
+                                    <span class="oi oi-trash"></span> Yes, delete
+                                </button>
+                            {{ form_end(delete_form) }}
                         </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
+                    </div>
+                </div>
+            </div>
         {% endfor %}
     </div>
 {% endblock %}
