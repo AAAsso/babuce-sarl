@@ -6,7 +6,7 @@ $(document).ready(function () {
         var link = $(this).data('url-show');
 
         // redirect only if user click on a row, not on a button or link or...
-        if ($(event.target).is("td")) {
+        if ($(event.target).hasClass('js-aaa-table-redirect-to-details') || $(event.target).is("td")) {
             window.location.href = link;
         }
     });
