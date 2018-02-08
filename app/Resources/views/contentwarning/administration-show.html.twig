@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ contentWarning.label }}{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/content-warning/details.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div id="content-warning-details">
+        <dl class="dl-horizontal">
+            <dt>ID</dt>
+            <dd>{{ contentWarning.id }}</dd>
+            <dt>Slug</dt>
+            <dd>
+                {#{{ contentWarning.slug }}#}
+                --
+            </dd>
+            <dt>Created</dt>
+            <dd>
+                {#{% if contentWarning.dateCreation %}
+                    {{ contentWarning.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y à H:mm') }}
+                {% endif %}#}
+                --
+            </dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Label</dt>
+            <dd>{{ contentWarning.label }}</dd>
+            <dt>Description</dt>
+            <dd>
+                {{ contentWarning.description }}
+            </dd>
+        </dl>
+    </div>
+
+    <div class="details-footer">
+        <a class="btn btn-outline-secondary mr-auto" href="{{ path('contentwarning_list') }}">
+            <span class="oi oi-chevron-left"></span> Back to the list
+        </a>
+        <a class="btn btn-outline-info" href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}">
+            <span class="oi oi-globe"></span> See public version
+        </a>
+        <a class="btn btn-outline-primary" href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}">
+            <span class="oi oi-pencil"></span> Edit
+        </a>
+    </div>
+    <ul>
+        <li>
+            <a href="{{ path('contentwarning_list') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}">Edit</a>
+        </li>
+    </ul>
+{% endblock %}
