@@ -1,6 +1,6 @@
 .table.aaa-table {
     table-layout: fixed;
-    margin-bottom: 1em 0em;
+    margin: 1em 0em;
 }
 
 .table.aaa-table.light {
@@ -117,12 +117,4 @@
 
 div.aaa-table.aaa-new-button {
     text-align: right !important;
-}
-
-div.aaa-table.aaa-new-button-top {
-    margin-bottom: 1em;
-}
-
-div.aaa-table.aaa-new-button-bottom {
-    margin-top: 1em;
 }
