@@ -15,7 +15,7 @@ $(document).ready(function () {
      * Add content of a long data as title
      * to allow user to preview it on hover
      */
-    $('.table.aaa-table > tbody > tr > td.ellipsis').each(function (index) {
+    $('.table.aaa-table > tbody > tr > td.ellipsis > span').each(function (index) {
         $(this).attr('title', $(this).html());
     });
 });
