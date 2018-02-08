@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-
 /**
  * Contentwarning controller.
  *
@@ -16,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ContentWarningController extends Controller
 {
+
     /**
      * Finds and displays a contentWarning entity.
      *
@@ -24,10 +24,9 @@ class ContentWarningController extends Controller
      */
     public function showAction(ContentWarning $contentWarning)
     {
-
-        return $this->render('contentwarning/show.html.twig', array(
-            'contentWarning' => $contentWarning,
-        ));
+        return $this->render('contentwarning/show.html.twig', [
+                'contentWarning' => $contentWarning,
+        ]);
     }
-}
 
+}
