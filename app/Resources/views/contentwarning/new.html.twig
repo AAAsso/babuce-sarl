@@ -1,16 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Contentwarning creation</h1>
-
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': {'id': 'form_create_contentwarning'}}) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('contentwarning_list') }}">Back to the list</a>
-        </li>
-    </ul>
+    <div class="btn-toolbar">
+        <span class="mr-auto"></span>
+        <a class="btn btn-outline-secondary mr-1" href="{{ path('contentwarning_list') }}">
+            <span class="oi oi-chevron-left"></span> Back to the list
+        </a>
+        <button class="btn btn-outline-primary" form="form_create_contentwarning">
+            <span class="oi oi-check"></span> Create
+        </button>
+    </div>
 {% endblock %}
