@@ -1,21 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Contentwarning edit</h1>
+{% block title %}Edit {{ contentWarning.label }}{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/content-warning/edit.css') }}" />
+{% endblock %}
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+{% block body %}
+    {{ form_start(edit_form, {'attr': {'id': 'form_edit_contentwarning'}}) }}
+    {{ form_widget(edit_form) }}
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('contentwarning_list') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="btn-toolbar">
+        <button
+            class="btn btn-outline-danger mr-auto"
+            data-toggle="modal"
+            data-target="#modal-delete-confirmation">
+            <span class="oi oi-trash"></span> Delete
+        </button>
+        <a class="btn btn-outline-secondary mr-1" href="{{ path('contentwarning_list') }}">
+            <span class="oi oi-chevron-left"></span> Back to the list
+        </a>
+        <button class="btn btn-outline-primary" form="form_edit_contentwarning">
+            <span class="oi oi-check"></span> Save modifications
+        </button>
+    </div>
+
+    <div id="modal-delete-confirmation" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Do you want to delete content warning {{ contentWarning.label }} ?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">
+                        <span class="oi oi-chevron-left"></span> Cancel
+                    </button>
+                    {{ form_start(delete_form) }}
+                    <button class="btn btn-danger" type="submit">
+                        <span class="oi oi-trash"></span> Yes, delete
+                    </button>
+                    {{ form_end(delete_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

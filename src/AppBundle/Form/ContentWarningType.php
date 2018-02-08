@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ContentWarningType extends AbstractType
 {
@@ -13,7 +14,15 @@ class ContentWarningType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('label')->add('description');
+        $builder
+            ->add('label')
+            ->add('description', TextareaType::class, [
+                'label' => 'Description',
+                'required' => true,
+                'attr' => [
+                    'class' => 'description',
+                ]
+            ]);
     }
     
     /**
