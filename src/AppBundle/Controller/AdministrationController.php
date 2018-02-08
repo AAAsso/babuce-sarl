@@ -206,6 +206,8 @@ class AdministrationController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($contentWarning);
                 $em->flush();
+
+                $session->getFlashBag()->add('success', 'Content warning successfully removed.');
             }
 
             return $this->redirectToRoute('contentwarning_list');
