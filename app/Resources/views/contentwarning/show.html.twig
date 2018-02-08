@@ -17,12 +17,14 @@
         </dl>
     </div>
 
-    <div class="btn-toolbar details-footer">
-        <a class="btn btn-outline-secondary mr-auto" href="{{ path('contentwarning_list') }}">
-            <span class="oi oi-chevron-left"></span> Back to the list
-        </a>
-        <a class="btn btn-outline-primary" href="{{ path('contentwarning_administration_show', { 'label': contentWarning.label }) }}">
-            <span class="oi oi-bug"></span> See in administration
-        </a>
-    </div>
+    {% if account.isAdmin() %}
+        <div class="btn-toolbar details-footer">
+            <a class="btn btn-outline-secondary mr-auto" href="{{ path('contentwarning_list') }}">
+                <span class="oi oi-chevron-left"></span> Back to the list
+            </a>
+            <a class="btn btn-outline-primary" href="{{ path('contentwarning_administration_show', { 'label': contentWarning.label }) }}">
+                <span class="oi oi-bug"></span> See in administration
+            </a>
+        </div>
+    {% endif %}
 {% endblock %}

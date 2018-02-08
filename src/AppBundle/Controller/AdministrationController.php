@@ -98,8 +98,16 @@ class AdministrationController extends Controller
      * @Route("/contentwarning/{label}", name="contentwarning_administration_show")
      * @Method("GET")
      */
-    public function showContentWarningAction(ContentWarning $contentWarning)
+    public function showContentWarningAction(Request $request, ContentWarning $contentWarning)
     {
+        $session = $request->getSession();
+
+        if (is_null($session->get('account')) || $session->get('account')->isAdmin() === false)
+        {
+            $session->getFlashBag()->add('danger', 'Access denied');
+            return $this->redirectToRoute('succubesarl');
+        }
+
         return $this->render('contentwarning/administration-show.html.twig', [
                 'contentWarning' => $contentWarning,
         ]);
