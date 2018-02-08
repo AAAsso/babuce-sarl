@@ -30,7 +30,7 @@
             <a href="/">
                 <div class="row">
                     <div class="col media">
-                            <img id="website-logo" class="align-self-end" src="{{ asset('images/en-tete.png') }}">
+                        <img id="website-logo" class="align-self-end" src="{{ asset('images/en-tete.png') }}">
                     </div>
                     <div id="website-title" class="col text-right align-self-center">
                         <span>Succube SARL</span>
@@ -83,19 +83,22 @@
                 {% set account = app.session.get('account') %}
                 <ul class="navbar-nav">
                     {% if account.isAdmin() %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Administration
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path('account_list') }}">
-                                Manage users
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Administration
                             </a>
-                            <a class="dropdown-item" href="{{ path('contentwarning_list') }}">
-                                Manage content warnings
-                            </a>
-                        </div>
-                    </li>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ path('account_list') }}">
+                                    Manage users
+                                </a>
+                                <a class="dropdown-item" href="{{ path('contentwarning_list') }}">
+                                    Manage content warnings
+                                </a>
+                                <a class="dropdown-item" href="{{ path('strip_list') }}">
+                                    Manage strips
+                                </a>
+                            </div>
+                        </li>
                     {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -144,9 +147,9 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div id="body-box" class="col-sm-12 col-md-8 col-lg-6 strip-box">
-            {% block body %}{% endblock %}
-        </div>
+        {% block body %}{% endblock %}
     </div>
+</div>
 </div>
 <footer class="footer">
     <div class="container">

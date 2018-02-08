@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Account
@@ -79,6 +80,19 @@ class Account
      * @ORM\Column(name="registerDate", type="datetime")
      */
     private $registerDate;
+    
+    /**
+     * @var array
+     * 
+     * @ORM\OneToMany(targetEntity="Strip", mappedBy="author")
+     */
+    private $strips;
+    
+    
+    public function __construct() {
+        $this->strips = new ArrayCollection();
+    }
+    
     
     
     /**

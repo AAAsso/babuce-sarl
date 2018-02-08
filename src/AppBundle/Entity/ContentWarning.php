@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ContentWarning
@@ -34,7 +35,16 @@ class ContentWarning
      * @ORM\Column(name="description", type="string", length=2000, nullable=true)
      */
     private $description;
-
+    
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="Strip", mappedBy="contentWarnings")
+     */
+    private $strips;
+    
+    public function __construct() {
+        $this->strips = new ArrayCollection();
+    }
 
     /**
      * Get id
