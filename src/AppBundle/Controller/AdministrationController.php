@@ -29,9 +29,9 @@ class AdministrationController extends Controller
      * @Route("/accounts", name="account_list")
      * @Method("GET")
      */
-    public function listAccountAction()
+    public function listAccountAction(Request $request)
     {
-        $session = new Session();
+        $session = $request->getSession();
 
         if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
         {
@@ -62,9 +62,9 @@ class AdministrationController extends Controller
      * @Route("/contentwarnings", name="contentwarning_list")
      * @Method("GET")
      */
-    public function listContentWarningAction()
+    public function listContentWarningAction(Request $request)
     {
-        $session = new Session();
+        $session = $request->getSession();
 
         if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
         {
@@ -121,7 +121,7 @@ class AdministrationController extends Controller
      */
     public function newContentWarningAction(Request $request)
     {
-        $session = new Session();
+        $session = $request->getSession();
 
         if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
         {
@@ -158,7 +158,7 @@ class AdministrationController extends Controller
      */
     public function editContentWarningAction(Request $request, ContentWarning $contentWarning)
     {
-        $session = new Session();
+        $session = $request->getSession();
 
         if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
         {
@@ -194,7 +194,7 @@ class AdministrationController extends Controller
      */
     public function deleteContentWarningAction(Request $request, ContentWarning $contentWarning)
     {
-        $session = new Session();
+        $session = $request->getSession();
 
         if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
         {
@@ -245,7 +245,7 @@ class AdministrationController extends Controller
      * @Route("/strips", name="strip_list")
      * @Method("GET")
      */
-    public function listStripAction()
+    public function listStripAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -307,7 +307,7 @@ class AdministrationController extends Controller
      * @Route("strips/{id}", name="strip_show")
      * @Method("GET")
      */
-    public function showStripAction(Strip $strip)
+    public function showStripAction(Request $request, Strip $strip)
     {
         $deleteForm = $this->createDeleteForm($strip);
 
