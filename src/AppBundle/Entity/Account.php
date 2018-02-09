@@ -97,11 +97,16 @@ class Account
      */
     protected $slug;
 
+    /*
+     * -------
+     * METHODS
+     * -------
+     */
+
+
     public function __construct() {
         $this->strips = new ArrayCollection();
     }
-
-
 
     /**
      * Get id
@@ -401,5 +406,15 @@ class Account
     {
         return $this->slug;
     }
+
+    /**
+     * Get strips
+     *
+     * @return array
+     */
+   public function getStrips()
+   {
+       return $this->strips;
+   }
 }
 

@@ -268,6 +268,8 @@ class AdministrationController extends Controller
      */
     public function newStripAction(Request $request)
     {
+        $session = $request->getSession();
+        
         $strip = new Strip();
         $form = $this->createForm('AppBundle\Form\StripType', $strip);
         $form->handleRequest($request);
@@ -291,9 +293,16 @@ class AdministrationController extends Controller
                 );
             }
             $strip->setStripElements($filenames);
-
+            
+            $idConnected = $session->get('account')->getId();
             $em = $this->getDoctrine()->getManager();
+            $account = $em->getRepository('AppBundle:Account')->find($idConnected);
+            
+            $account->getStrips()->add($strip);
+            $strip->setAuthor($account);
+            
             $em->persist($strip);
+            $em->persist($account);
             $em->flush();
 
             return $this->redirectToRoute('strip_show', ['id' => $strip->getId()]);
