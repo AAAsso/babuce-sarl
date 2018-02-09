@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * ContentWarning
@@ -35,7 +37,7 @@ class ContentWarning
      * @ORM\Column(name="description", type="string", length=2000, nullable=true)
      */
     private $description;
-    
+
     /**
      *
      * @ORM\ManyToMany(targetEntity="Strip", mappedBy="contentWarnings")
@@ -48,6 +50,15 @@ class ContentWarning
      * @ORM\Column(name="creationDate", type="datetime")
      */
     private $creationDate;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"label"}, updatable=false)
+     * @ORM\Column(name="slug", type="string", length=300, unique=true)
+     */
+    protected $slug;
+
 
     public function __construct() {
         $this->strips = new ArrayCollection();
@@ -133,6 +144,30 @@ class ContentWarning
     public function getCreationDate()
     {
         return $this->creationDate;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Strip
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
 
