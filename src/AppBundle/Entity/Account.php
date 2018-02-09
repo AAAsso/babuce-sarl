@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Account
@@ -43,12 +44,12 @@ class Account
      * @ORM\Column(name="emailIsPublic", type="boolean", options={"default" : 0})
      */
     private $emailIsPublic = 0;
-    
+
     /**
      * @var string
      *
      * 64 characters long because using bcrypt encoding
-     * 
+     *
      * @ORM\Column(name="password", type="string", length=64)
      */
     private $password;
@@ -62,39 +63,46 @@ class Account
 
     /**
      * @var string
-     * 
+     *
      * @ORM\Column(name="biography", type="string", length=2000, nullable=true)
      */
     private $biography;
-    
+
     /**
      * @var integer
      *
      * @ORM\Column(name="level", type="integer", options={"default" : 1})
      */
     private $level = 1;
-    
+
     /**
      * @var DateTime
-     * 
+     *
      * @ORM\Column(name="registerDate", type="datetime")
      */
     private $registerDate;
-    
+
     /**
      * @var array
-     * 
+     *
      * @ORM\OneToMany(targetEntity="Strip", mappedBy="author")
      */
     private $strips;
-    
-    
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"username"}, updatable=false)
+     * @ORM\Column(name="slug", type="string", length=300, unique=true)
+     */
+    protected $slug;
+
     public function __construct() {
         $this->strips = new ArrayCollection();
     }
-    
-    
-    
+
+
+
     /**
      * Get id
      *
@@ -152,7 +160,7 @@ class Account
     {
         return $this->email;
     }
-    
+
     /**
      * Set emailIsPublic
      *
@@ -176,7 +184,7 @@ class Account
     {
         return $this->emailIsPublic;
     }
-    
+
     /**
      * Set password
      *
@@ -224,7 +232,7 @@ class Account
     {
         return $this->avatar;
     }
-    
+
     /**
      * Set biography
      *
@@ -248,7 +256,7 @@ class Account
     {
         return $this->biography;
     }
-    
+
     /**
      * Get level
      *
@@ -258,7 +266,7 @@ class Account
     {
         return $this->level;
     }
-    
+
     /**
      * Is admin
      *
@@ -275,7 +283,7 @@ class Account
             return False;
         }
     }
-    
+
     /**
      * Is guest
      *
@@ -292,7 +300,7 @@ class Account
             return False;
         }
     }
-    
+
     /**
      * Is user
      *
@@ -309,7 +317,7 @@ class Account
             return False;
         }
     }
-    
+
     /**
      * Set admin
      *
@@ -318,10 +326,10 @@ class Account
     public function setAdmin()
     {
         $this->level = 3;
-        
+
         return $this;
     }
-    
+
     /**
      * Set guest
      *
@@ -330,10 +338,10 @@ class Account
     public function setGuest()
     {
         $this->level = 2;
-        
+
         return $this;
     }
-    
+
     /**
      * Set user
      *
@@ -342,10 +350,10 @@ class Account
     public function setUser()
     {
         $this->level = 1;
-        
+
         return $this;
     }
-    
+
     /**
      * Set registerDate
      *
@@ -369,6 +377,29 @@ class Account
     {
         return $this->registerDate;
     }
-    
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Strip
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 }
 

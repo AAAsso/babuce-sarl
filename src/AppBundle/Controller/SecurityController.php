@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
+use AppBundle\Entity\Account;
 
 class SecurityController extends Controller
 {
@@ -53,7 +53,7 @@ class SecurityController extends Controller
     /**
      * @Route("/firstlogin", name="firstlogin")
      */
-    public function firstloginAction(Request $request)
+    public function firstloginAction(Request $request, Account $account)
     {
         $em = $this->getDoctrine()->getManager();
         
