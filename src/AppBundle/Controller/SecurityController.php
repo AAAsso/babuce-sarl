@@ -21,7 +21,7 @@ class SecurityController extends Controller
         
         $account = $em->getRepository('AppBundle:Account')->accountExists($username);
         
-        $session = new Session();
+        $session = $request->getSession();
         
         if (!is_null($account))
         {
@@ -53,11 +53,11 @@ class SecurityController extends Controller
     /**
      * @Route("/firstlogin", name="firstlogin")
      */
-    public function firstloginAction($account)
+    public function firstloginAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         
-        $session = new Session();
+        $session = $request->getSession();
         
         if (!is_null($account))
         {
@@ -73,9 +73,9 @@ class SecurityController extends Controller
     /**
      * @Route("/logout", name="logout")
      */
-    public function logoutAction()
+    public function logoutAction(Request $request)
     {
-        $session = new Session();
+        $session = $request->getSession();
         $session->clear();
         
         return $this->redirectToRoute('succubesarl');

@@ -14,7 +14,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $session = new Session();
+        $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
         
         

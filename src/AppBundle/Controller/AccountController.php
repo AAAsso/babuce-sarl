@@ -30,7 +30,7 @@ class AccountController extends Controller
      */
     public function newAction(Request $request)
     {
-        $session = new Session();
+        $session = $request->getSession();
 
         $account = new Account();
         $form = $this->createForm('AppBundle\Form\AccountType', $account);
