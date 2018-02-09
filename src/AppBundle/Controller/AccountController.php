@@ -65,7 +65,7 @@ class AccountController extends Controller
     /**
      * Finds and displays a account entity.
      *
-     * @Route("/{username}", name="account_show")
+     * @Route("/{slug}", name="account_show")
      * @Method("GET")
      */
     public function showAction(Account $account)
@@ -81,7 +81,7 @@ class AccountController extends Controller
     /**
      * Displays a form to edit an existing account entity.
      *
-     * @Route("/edit/{username}", name="account_edit")
+     * @Route("/edit/{slug}", name="account_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Account $account)
@@ -134,7 +134,7 @@ class AccountController extends Controller
     /**
      * Deletes a account entity.
      *
-     * @Route("/{id}", name="account_delete")
+     * @Route("/{slug}", name="account_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Account $account)
@@ -211,7 +211,7 @@ class AccountController extends Controller
     private function createDeleteForm(Account $account)
     {
         return $this->createFormBuilder()
-                ->setAction($this->generateUrl('account_delete', array('id' => $account->getId())))
+                ->setAction($this->generateUrl('account_delete', array('slug' => $account->getSlug())))
                 ->setMethod('DELETE')
                 ->getForm()
         ;

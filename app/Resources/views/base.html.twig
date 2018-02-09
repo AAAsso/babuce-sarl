@@ -106,10 +106,10 @@
                             {{ account.username }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item disabled" href="{{ path('account_show', { 'username': account.username }) }}">
+                            <a class="dropdown-item disabled" href="{{ path('account_show', { 'slug': account.slug }) }}">
                                 My profile
                             </a>
-                            <a class="dropdown-item disabled" href="{{ path('account_edit', { 'username': account.username }) }}">
+                            <a class="dropdown-item disabled" href="{{ path('account_edit', { 'slug': account.slug }) }}">
                                 <span class="oi oi-cog"></span> Preferences
                             </a>
                             <div class="dropdown-divider"></div>

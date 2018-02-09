@@ -30,7 +30,7 @@
 
     <div id="account-details-buttons" class="col-md-12">
         {% if app.session.get('isConnected') and account.id == shown_account.id %}
-            <a href="{{ path('account_edit', { 'username': shown_account.username })}}" class="btn btn-primary float-right"><span class="oi oi-pencil"></span> Edit</a>
+            <a href="{{ path('account_edit', { 'slug': shown_account.slug })}}" class="btn btn-primary float-right"><span class="oi oi-pencil"></span> Edit</a>
         {% endif %}
     </div>
 {% endblock %}

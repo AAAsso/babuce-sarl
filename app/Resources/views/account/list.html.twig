@@ -17,7 +17,7 @@
         {% for account in accounts %}
             <tr
                 class="aaa-row-clickable"
-                data-url-show="{{ path('account_show', { 'username': account.username }) }}"
+                data-url-show="{{ path('account_show', { 'slug': account.slug }) }}"
                 title="See user profile"
                 >
                 <td>{{ account.id }}</td>
@@ -30,7 +30,7 @@
                 <td class="aaa-button">
                     <a 
                         class="btn btn-primary"
-                        href="{{ path('account_edit', { 'username': account.username }) }}"
+                        href="{{ path('account_edit', { 'slug': account.slug }) }}"
                         role="button"
                         title="Edit this account">
                         <span class="oi oi-pencil"></span>
