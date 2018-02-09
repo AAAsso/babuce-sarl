@@ -37,10 +37,10 @@
         <a class="btn btn-outline-secondary mr-auto" href="{{ path('contentwarning_list') }}">
             <span class="oi oi-chevron-left"></span> Back to the list
         </a>
-        <a class="btn btn-outline-info mr-1" href="{{ path('contentwarning_show', { 'label': contentWarning.label }) }}">
+        <a class="btn btn-outline-info mr-1" href="{{ path('contentwarning_show', { 'slug': contentWarning.slug }) }}">
             <span class="oi oi-globe"></span> See public version
         </a>
-        <a class="btn btn-outline-primary mr-0" href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}">
+        <a class="btn btn-outline-primary mr-0" href="{{ path('contentwarning_edit', { 'slug': contentWarning.slug }) }}">
             <span class="oi oi-pencil"></span> Edit
         </a>
     </div>

@@ -95,7 +95,7 @@ class AdministrationController extends Controller
     /**
      * Finds and displays a contentWarning entity.
      *
-     * @Route("/contentwarning/{label}", name="contentwarning_administration_show")
+     * @Route("/contentwarning/{slug}", name="contentwarning_administration_show")
      * @Method("GET")
      */
     public function showContentWarningAction(Request $request, ContentWarning $contentWarning)
@@ -137,7 +137,7 @@ class AdministrationController extends Controller
                 $em->persist($contentWarning);
                 $em->flush();
 
-                return $this->redirectToRoute('contentwarning_show', ['label' => $contentWarning->getLabel()]);
+                return $this->redirectToRoute('contentwarning_show', ['slug' => $contentWarning->getSlug()]);
             }
 
             return $this->render('contentwarning/new.html.twig', [
@@ -155,7 +155,7 @@ class AdministrationController extends Controller
     /**
      * Displays a form to edit an existing contentWarning entity.
      *
-     * @Route("/contentwarnings/{label}/edit", name="contentwarning_edit")
+     * @Route("/contentwarnings/{slug}/edit", name="contentwarning_edit")
      * @Method({"GET", "POST"})
      */
     public function editContentWarningAction(Request $request, ContentWarning $contentWarning)
@@ -172,7 +172,7 @@ class AdministrationController extends Controller
             {
                 $this->getDoctrine()->getManager()->flush();
 
-                return $this->redirectToRoute('contentwarning_edit', ['label' => $contentWarning->getLabel()]);
+                return $this->redirectToRoute('contentwarning_edit', ['slug' => $contentWarning->getSlug()]);
             }
 
             return $this->render('contentwarning/edit.html.twig', [
@@ -191,7 +191,7 @@ class AdministrationController extends Controller
     /**
      * Deletes a contentWarning entity.
      *
-     * @Route("/contentwarnings/{id}", name="contentwarning_delete")
+     * @Route("/contentwarnings/{slug}", name="contentwarning_delete")
      * @Method("DELETE")
      */
     public function deleteContentWarningAction(Request $request, ContentWarning $contentWarning)
@@ -231,7 +231,7 @@ class AdministrationController extends Controller
     private function createContentWarningDeleteForm(ContentWarning $contentWarning)
     {
         return $this->createFormBuilder()
-                ->setAction($this->generateUrl('contentwarning_delete', ['id' => $contentWarning->getId()]))
+                ->setAction($this->generateUrl('contentwarning_delete', ['slug' => $contentWarning->getSlug()]))
                 ->setMethod('DELETE')
                 ->getForm()
         ;

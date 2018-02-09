@@ -24,7 +24,7 @@
         {% for contentWarning in contentWarnings %}
             <tr
                 class="aaa-row-clickable"
-                data-url-show="{{ path('contentwarning_show', { 'label': contentWarning.label }) }}"
+                data-url-show="{{ path('contentwarning_show', { 'slug': contentWarning.slug }) }}"
                 title="See content warning"
                 >
                 <td>{{ contentWarning.id }}</td>
@@ -38,7 +38,7 @@
                 <td class="aaa-button">
                     <a
                         class="btn btn-outline-info"
-                        href="{{ path('contentwarning_administration_show', { 'label': contentWarning.label }) }}"
+                        href="{{ path('contentwarning_administration_show', { 'slug': contentWarning.slug }) }}"
                         role="button"
                         title="See in administration">
                         <span class="oi oi-bug"></span>
@@ -47,7 +47,7 @@
                 <td class="aaa-button">
                     <a
                         class="btn btn-outline-secondary"
-                        href="{{ path('contentwarning_edit', { 'label': contentWarning.label }) }}"
+                        href="{{ path('contentwarning_edit', { 'slug': contentWarning.slug }) }}"
                         role="button"
                         title="Edit this content warning">
                         <span class="oi oi-pencil"></span>
@@ -57,7 +57,7 @@
                     <button
                         class="btn btn-outline-danger"
                         data-toggle="modal"
-                        data-target="#modal-{{ contentWarning.id }}"
+                        data-target="#modal-{{ contentWarning.slug }}"
                         title="Delete this content warning">
                         <span class="oi oi-trash"></span>
                     </button>
@@ -76,7 +76,7 @@
     <div id="modals-deletion-confirmation">
         {% for contentWarning in contentWarnings %}
             {% set delete_form = delete_forms[contentWarning.id] %}
-            <div id="modal-{{ contentWarning.id }}" class="modal fade" tabindex="-1" role="dialog">
+            <div id="modal-{{ contentWarning.slug }}" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">

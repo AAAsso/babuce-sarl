@@ -19,7 +19,7 @@ class ContentWarningController extends Controller
     /**
      * Finds and displays a contentWarning entity.
      *
-     * @Route("/{label}", name="contentwarning_show")
+     * @Route("/{slug}", name="contentwarning_show")
      * @Method("GET")
      */
     public function showAction(ContentWarning $contentWarning)
