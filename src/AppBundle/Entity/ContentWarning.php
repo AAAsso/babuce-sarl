@@ -41,7 +41,14 @@ class ContentWarning
      * @ORM\ManyToMany(targetEntity="Strip", mappedBy="contentWarnings")
      */
     private $strips;
-    
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="creationDate", type="datetime")
+     */
+    private $creationDate;
+
     public function __construct() {
         $this->strips = new ArrayCollection();
     }
@@ -102,6 +109,30 @@ class ContentWarning
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set creationDate
+     *
+     * @param string $creationDate
+     *
+     * @return ContentWarning
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
     }
 }
 

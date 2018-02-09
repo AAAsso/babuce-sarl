@@ -33,9 +33,7 @@
                     <span class="js-aaa-table-redirect-to-details">{{ contentWarning.description }}</span>
                 </td>
                 <td class="aaa-date">
-                    {# Todo #}
-                    - -
-                    {#{{ contentWarning.registerdate|localizeddate('none', 'none', 'fr_FR', null, 'd LLL Y') }}#}
+                    {{ contentWarning.creationDate|localizeddate('none', 'none', 'fr_FR', null, 'd LLL Y') }}
                 </td>
                 <td class="aaa-button">
                     <a

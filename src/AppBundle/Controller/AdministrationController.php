@@ -131,6 +131,8 @@ class AdministrationController extends Controller
 
             if ($form->isSubmitted() && $form->isValid())
             {
+                $contentWarning->setCreationDate(new \DateTime("now"));
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($contentWarning);
                 $em->flush();

@@ -17,10 +17,9 @@
             </dd>
             <dt>Created</dt>
             <dd>
-                {#{% if contentWarning.dateCreation %}
-                    {{ contentWarning.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y à H:mm') }}
-                {% endif %}#}
-                --
+                {% if contentWarning.creationDate %}
+                    {{ contentWarning.creationDate|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y, H:mm') }}
+                {% endif %}
             </dd>
         </dl>
         <dl class="dl-horizontal">
