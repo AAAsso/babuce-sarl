@@ -17,6 +17,8 @@ use AppBundle\Entity\Strip;
  */
 class AdministrationController extends Controller
 {
+    const ACCESS_DENIED_MESSAGE = 'Access denied';
+
     /*
      * ----------------------------------
      * Methods for Account administration
@@ -32,22 +34,20 @@ class AdministrationController extends Controller
     public function listAccountAction(Request $request)
     {
         $session = $request->getSession();
+        $connectedUser = $session->get('account');
 
-        if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
+        if ($this->userHasAccessRights($connectedUser) === false)
         {
-            $em = $this->getDoctrine()->getManager();
-
-            $accounts = $em->getRepository('AppBundle:Account')->findAll();
-
-            return $this->render('account/list.html.twig', [
-                    'accounts' => $accounts,
-            ]);
-        }
-        else
-        {
-            $session->getFlashBag()->add('danger', 'Access denied');
+            $session->getFlashBag()->add('danger', self::ACCESS_DENIED_MESSAGE);
             return $this->redirectToRoute('succubesarl');
         }
+
+        $em = $this->getDoctrine()->getManager();
+        $accounts = $em->getRepository('AppBundle:Account')->findAll();
+
+        return $this->render('account/list.html.twig', [
+                'accounts' => $accounts,
+        ]);
     }
 
     /*
@@ -65,31 +65,28 @@ class AdministrationController extends Controller
     public function listContentWarningAction(Request $request)
     {
         $session = $request->getSession();
+        $connectedUser = $session->get('account');
 
-        if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
+        if ($this->userHasAccessRights($connectedUser) === false)
         {
-            $em = $this->getDoctrine()->getManager();
-
-            $contentWarnings = $em->getRepository('AppBundle:ContentWarning')->findAll();
-
-            $deleteForms = [];
-
-            foreach ($contentWarnings as $contentWarning)
-            {
-                $deleteForm = $this->createContentWarningDeleteForm($contentWarning);
-                $deleteForms[$contentWarning->getId()] = $deleteForm->createView();
-            }
-
-            return $this->render('contentwarning/list.html.twig', [
-                    'contentWarnings' => $contentWarnings,
-                    'delete_forms' => $deleteForms,
-            ]);
-        }
-        else
-        {
-            $session->getFlashBag()->add('danger', 'Access denied');
+            $session->getFlashBag()->add('danger', self::ACCESS_DENIED_MESSAGE);
             return $this->redirectToRoute('succubesarl');
         }
+
+        $em = $this->getDoctrine()->getManager();
+        $contentWarnings = $em->getRepository('AppBundle:ContentWarning')->findAll();
+
+        $deleteForms = [];
+        foreach ($contentWarnings as $contentWarning)
+        {
+            $deleteForm = $this->createContentWarningDeleteForm($contentWarning);
+            $deleteForms[$contentWarning->getId()] = $deleteForm->createView();
+        }
+
+        return $this->render('contentwarning/list.html.twig', [
+                'contentWarnings' => $contentWarnings,
+                'delete_forms' => $deleteForms,
+        ]);
     }
 
     /**
@@ -101,10 +98,11 @@ class AdministrationController extends Controller
     public function showContentWarningAction(Request $request, ContentWarning $contentWarning)
     {
         $session = $request->getSession();
+        $connectedUser = $session->get('account');
 
-        if (is_null($session->get('account')) || $session->get('account')->isAdmin() === false)
+        if ($this->userHasAccessRights($connectedUser) === false)
         {
-            $session->getFlashBag()->add('danger', 'Access denied');
+            $session->getFlashBag()->add('danger', self::ACCESS_DENIED_MESSAGE);
             return $this->redirectToRoute('succubesarl');
         }
 
@@ -122,34 +120,33 @@ class AdministrationController extends Controller
     public function newContentWarningAction(Request $request)
     {
         $session = $request->getSession();
+        $connectedUser = $session->get('account');
 
-        if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
+        if ($this->userHasAccessRights($connectedUser) === false)
         {
-            $contentWarning = new \AppBundle\Entity\ContentWarning();
-            $form = $this->createForm('AppBundle\Form\ContentWarningType', $contentWarning);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid())
-            {
-                $contentWarning->setCreationDate(new \DateTime("now"));
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($contentWarning);
-                $em->flush();
-
-                return $this->redirectToRoute('contentwarning_show', ['slug' => $contentWarning->getSlug()]);
-            }
-
-            return $this->render('contentwarning/new.html.twig', [
-                    'contentWarning' => $contentWarning,
-                    'form' => $form->createView(),
-            ]);
-        }
-        else
-        {
-            $session->getFlashBag()->add('danger', 'Access denied');
+            $session->getFlashBag()->add('danger', self::ACCESS_DENIED_MESSAGE);
             return $this->redirectToRoute('succubesarl');
         }
+
+        $contentWarning = new \AppBundle\Entity\ContentWarning();
+        $form = $this->createForm('AppBundle\Form\ContentWarningType', $contentWarning);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $contentWarning->setCreationDate(new \DateTime("now"));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($contentWarning);
+            $em->flush();
+
+            return $this->redirectToRoute('contentwarning_show', ['slug' => $contentWarning->getSlug()]);
+        }
+
+        return $this->render('contentwarning/new.html.twig', [
+                'contentWarning' => $contentWarning,
+                'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -161,31 +158,30 @@ class AdministrationController extends Controller
     public function editContentWarningAction(Request $request, ContentWarning $contentWarning)
     {
         $session = $request->getSession();
+        $connectedUser = $session->get('account');
 
-        if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
+        if ($this->userHasAccessRights($connectedUser) === false)
         {
-            $deleteForm = $this->createContentWarningDeleteForm($contentWarning);
-            $editForm = $this->createForm('AppBundle\Form\ContentWarningType', $contentWarning);
-            $editForm->handleRequest($request);
-
-            if ($editForm->isSubmitted() && $editForm->isValid())
-            {
-                $this->getDoctrine()->getManager()->flush();
-
-                return $this->redirectToRoute('contentwarning_edit', ['slug' => $contentWarning->getSlug()]);
-            }
-
-            return $this->render('contentwarning/edit.html.twig', [
-                    'contentWarning' => $contentWarning,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-            ]);
-        }
-        else
-        {
-            $session->getFlashBag()->add('danger', 'Access denied');
+            $session->getFlashBag()->add('danger', self::ACCESS_DENIED_MESSAGE);
             return $this->redirectToRoute('succubesarl');
         }
+
+        $deleteForm = $this->createContentWarningDeleteForm($contentWarning);
+        $editForm = $this->createForm('AppBundle\Form\ContentWarningType', $contentWarning);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('contentwarning_edit', ['slug' => $contentWarning->getSlug()]);
+        }
+
+        return $this->render('contentwarning/edit.html.twig', [
+                'contentWarning' => $contentWarning,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+        ]);
     }
 
     /**
@@ -197,28 +193,27 @@ class AdministrationController extends Controller
     public function deleteContentWarningAction(Request $request, ContentWarning $contentWarning)
     {
         $session = $request->getSession();
+        $connectedUser = $session->get('account');
 
-        if ($session->get('account') != null && $session->get('account')->isAdmin() === true)
+        if ($this->userHasAccessRights($connectedUser) === false)
         {
-            $form = $this->createContentWarningDeleteForm($contentWarning);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid())
-            {
-                $em = $this->getDoctrine()->getManager();
-                $em->remove($contentWarning);
-                $em->flush();
-
-                $session->getFlashBag()->add('success', 'Content warning successfully removed.');
-            }
-
-            return $this->redirectToRoute('contentwarning_list');
-        }
-        else
-        {
-            $session->getFlashBag()->add('danger', 'Access denied');
+            $session->getFlashBag()->add('danger', self::ACCESS_DENIED_MESSAGE);
             return $this->redirectToRoute('succubesarl');
         }
+
+        $form = $this->createContentWarningDeleteForm($contentWarning);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($contentWarning);
+            $em->flush();
+
+            $session->getFlashBag()->add('success', 'Content warning successfully removed.');
+        }
+
+        return $this->redirectToRoute('contentwarning_list');
     }
 
     /**
@@ -251,8 +246,16 @@ class AdministrationController extends Controller
      */
     public function listStripAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
+        $connectedUser = $session->get('account');
 
+        if ($this->userHasAccessRights($connectedUser) === false)
+        {
+            $session->getFlashBag()->add('danger', self::ACCESS_DENIED_MESSAGE);
+            return $this->redirectToRoute('succubesarl');
+        }
+
+        $em = $this->getDoctrine()->getManager();
         $strips = $em->getRepository('AppBundle:Strip')->findAll();
 
         return $this->render('strip/list.html.twig', [
@@ -268,6 +271,15 @@ class AdministrationController extends Controller
      */
     public function newStripAction(Request $request)
     {
+        $session = $request->getSession();
+        $connectedUser = $session->get('account');
+
+        if ($this->userHasAccessRights($connectedUser) === false)
+        {
+            $session->getFlashBag()->add('danger', self::ACCESS_DENIED_MESSAGE);
+            return $this->redirectToRoute('succubesarl');
+        }
+
         $strip = new Strip();
         $form = $this->createForm('AppBundle\Form\StripType', $strip);
         $form->handleRequest($request);
@@ -313,6 +325,15 @@ class AdministrationController extends Controller
      */
     public function showStripAction(Request $request, Strip $strip)
     {
+        $session = $request->getSession();
+        $connectedUser = $session->get('account');
+
+        if ($this->userHasAccessRights($connectedUser) === false)
+        {
+            $session->getFlashBag()->add('danger', self::ACCESS_DENIED_MESSAGE);
+            return $this->redirectToRoute('succubesarl');
+        }
+
         $deleteForm = $this->createDeleteForm($strip);
 
         return $this->render('strip/show.html.twig', [
@@ -329,6 +350,15 @@ class AdministrationController extends Controller
      */
     public function editStripAction(Request $request, Strip $strip)
     {
+        $session = $request->getSession();
+        $connectedUser = $session->get('account');
+
+        if ($this->userHasAccessRights($connectedUser) === false)
+        {
+            $session->getFlashBag()->add('danger', self::ACCESS_DENIED_MESSAGE);
+            return $this->redirectToRoute('succubesarl');
+        }
+
         $deleteForm = $this->createDeleteForm($strip);
         $editForm = $this->createForm('AppBundle\Form\StripType', $strip);
         $editForm->handleRequest($request);
@@ -355,6 +385,15 @@ class AdministrationController extends Controller
      */
     public function deleteStripAction(Request $request, Strip $strip)
     {
+        $session = $request->getSession();
+        $connectedUser = $session->get('account');
+
+        if ($this->userHasAccessRights($connectedUser) === false)
+        {
+            $session->getFlashBag()->add('danger', self::ACCESS_DENIED_MESSAGE);
+            return $this->redirectToRoute('succubesarl');
+        }
+
         $form = $this->createDeleteForm($strip);
         $form->handleRequest($request);
 
@@ -382,6 +421,31 @@ class AdministrationController extends Controller
                 ->setMethod('DELETE')
                 ->getForm()
         ;
+    }
+
+    /**
+     * Check if the user can access the website administration
+     *
+     * @param \AppBundle\Controller\Account $connectedUser user in the current Session
+     * @return boolean true if the user can access the administration, false otherwise
+     */
+    private function userHasAccessRights(\AppBundle\Entity\Account $connectedUser)
+    {
+        if (is_null($connectedUser))
+        {
+            // user is not logged
+            return false;
+        }
+        elseif ($connectedUser->isAdmin() === false)
+        {
+            // user is not an admin
+            return false;
+        }
+        else
+        {
+            // user can access the administration
+            return true;
+        }
     }
 
 }
