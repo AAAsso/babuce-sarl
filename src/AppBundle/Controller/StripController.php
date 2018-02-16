@@ -13,7 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("strip")
  */
-class StripController extends Controller {
+class StripController extends Controller
+{
 
     /**
      * Finds and displays a strip entity to the public.
@@ -21,8 +22,15 @@ class StripController extends Controller {
      * @Route("/{id}", name="strip_display")
      * @Method("GET")
      */
-    public function displayStripAction(Request $request, Strip $strip) {
+    public function displayStripAction(Request $request, Strip $strip)
+    {
 
+        $strip = $this->getDoctrine()
+                ->getRepository(Strip::class)
+                ->findAuthors($strip);
+
+//        dump($strip);
+//        die();
         return $this->render('strip/display.html.twig', [
                     'strip' => $strip,
         ]);

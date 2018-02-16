@@ -9,10 +9,10 @@
                 {# TODO : do something clean #}
                 <th>Stripelements</th>
                     {% for stripElement in strip.stripElements %}
-                        <td>
-                            <img src="{{ app.request.scheme ~ '://' ~ app.request.host ~ ':8000/images/strips/' ~  stripElement  }}"/>
-                        </td>
-                    {% endfor %}
+                    <td>
+                        <img src="{{ app.request.scheme ~ '://' ~ app.request.host ~ ':8000/images/strips/' ~  stripElement  }}"/>
+                    </td>
+                {% endfor %}
             </tr>
             <tr>
                 <th>Publicationdate</th>
@@ -29,9 +29,7 @@
             <tr>
                 <th>Author</th>
                 <td>
-                    {% for account in strip.author%} 
-                        <a href="{{ path('acount_show', { 'slug': account.slug }) }}">{{ account.slug }}</a> 
-                    {% endfor %}
+                    <a href="{{ path('account_show', { 'slug': strip.author.slug }) }}">{{ strip.author.username }}</a> 
                 </td>
             </tr>
         </tbody>
