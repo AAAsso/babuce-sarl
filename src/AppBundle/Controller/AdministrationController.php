@@ -304,8 +304,11 @@ class AdministrationController extends Controller
             }
             $strip->setStripElements($filenames);
 
-            $em = $this->getDoctrine()->getManager();
+            $account->getStrips()->add($strip);
+            $strip->setAuthor($connectedUser);
+
             $em->persist($strip);
+            $em->persist($connectedUser);
             $em->flush();
 
             return $this->redirectToRoute('strip_show', ['id' => $strip->getId()]);

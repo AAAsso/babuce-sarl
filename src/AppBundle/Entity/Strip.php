@@ -56,7 +56,7 @@ class Strip
     /**
      * @var array
      * 
-     * @ORM\ManyToMany(targetEntity="ContentWarning", inversedBy="strips")
+     * @ORM\ManyToMany(targetEntity="ContentWarning")
      * @ORM\JoinTable(name="strips_contentWarnings")
      */
     private $contentWarnings;
@@ -69,7 +69,7 @@ class Strip
     /**
      *
      * @ORM\ManyToOne(targetEntity="Account", inversedBy="strips")
-     * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
     private $author;
 

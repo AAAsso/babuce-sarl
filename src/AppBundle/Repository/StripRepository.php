@@ -10,4 +10,26 @@ namespace AppBundle\Repository;
  */
 class StripRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findAuthors($strip)
+    {
+        $query = $this->getEntityManager()
+                ->createQuery(
+                        'SELECT s, a 
+                        FROM AppBundle:Strip s
+                        JOIN s.author a
+                        WHERE s.id = :id'
+                )
+                ->setParameter('id', $strip);
+
+        try
+        {
+            return $query->getSingleResult();
+        }
+        catch (\Doctrine\ORM\NoResultException $e)
+        {
+            return null;
+        }
+    }
+
 }
