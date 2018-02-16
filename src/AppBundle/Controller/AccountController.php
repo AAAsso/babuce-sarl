@@ -149,7 +149,7 @@ class AccountController extends Controller
 
             $session = $request->getSession();
             $session->clear();
-            $session->getFlashBag()->add('success', 'Your account have been deleted.');
+            $session->getFlashBag()->add('success', 'Your account has been deleted.');
 
             return $this->redirectToRoute('succubesarl');
         }
@@ -162,13 +162,13 @@ class AccountController extends Controller
         $session = $request->getSession();
         if (!$editAccountGeneralInformationForm->isValid())
         {
-            $session->getFlashBag()->add('danger', 'Your iinformation have not been updated, please retry.');
+            $session->getFlashBag()->add('danger', 'Your information has not been updated, please retry.');
         }
         else
         {
             $this->getDoctrine()->getManager()->flush();
 
-            $session->getFlashBag()->add('success', 'Your information have been updated.');
+            $session->getFlashBag()->add('success', 'Your information has been updated.');
         }
     }
 
@@ -177,7 +177,7 @@ class AccountController extends Controller
         $session = $request->getSession();
         if (!$editAccountPasswordForm->isValid())
         {
-            $session->getFlashBag()->add('danger', 'Your password have not been updated, please retry.');
+            $session->getFlashBag()->add('danger', 'Your password has not been updated, please retry.');
         }
         else
         {
@@ -191,12 +191,12 @@ class AccountController extends Controller
                 $account->setPassword($newPassword);
                 $this->getDoctrine()->getManager()->flush();
 
-                $session->getFlashBag()->add('success', 'Your password have been updated.');
+                $session->getFlashBag()->add('success', 'Your password has been updated.');
             }
             else
             {
                 $editAccountPasswordForm->get('old-password')->addError(new FormError('Incorrect password.'));
-                $session->getFlashBag()->add('danger', 'Your password have not been updated, please retry.');
+                $session->getFlashBag()->add('danger', 'Your password has not been updated, please retry.');
             }
         }
     }
