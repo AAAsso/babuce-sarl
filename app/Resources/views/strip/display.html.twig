@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ strip.title }}</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                {# TODO : do something clean #}
+                <th>Stripelements</th>
+                    {% for stripElement in strip.stripElements %}
+                        <td>
+                            <img src="{{ app.request.scheme ~ '://' ~ app.request.host ~ ':8000/images/strips/' ~  stripElement  }}"/>
+                        </td>
+                    {% endfor %}
+            </tr>
+            <tr>
+                <th>Publicationdate</th>
+                <td>{% if strip.publicationDate %}{{ strip.publicationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Content Warnings</th>
+                <td>
+                    {% for contentWarning in strip.contentWarnings%} 
+                        <a href="{{ path('contentwarning_show', { 'slug': contentWarning.slug }) }}">{{ contentWarning.slug }}</a> 
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>
+                    {% for account in strip.author%} 
+                        <a href="{{ path('acount_show', { 'slug': account.slug }) }}">{{ account.slug }}</a> 
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
