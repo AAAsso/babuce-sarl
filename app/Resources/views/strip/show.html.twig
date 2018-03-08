@@ -26,6 +26,20 @@
                 <td>{{ strip.slug }}</td>
             </tr>
             <tr>
+                <th>Content Warnings</th>
+                <td>
+                    {% for contentWarning in strip.contentWarnings%} 
+                        <a href="{{ path('contentwarning_show', { 'slug': contentWarning.slug }) }}">{{ contentWarning.slug }}</a> 
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>
+                    <a href="{{ path('account_show', { 'slug': strip.author.slug }) }}">{{ strip.author.username }}</a> 
+                </td>
+            </tr>
+            <tr>
                 <th>Stripelements</th>
                 <td>{% if strip.stripElements %}{{ strip.stripElements|join(', ') }}{% endif %}</td>
             </tr>
@@ -41,7 +55,7 @@
         </li>
         <li>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+            <input type="submit" value="Delete">
             {{ form_end(delete_form) }}
         </li>
     </ul>

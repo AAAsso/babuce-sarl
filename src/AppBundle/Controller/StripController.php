@@ -27,10 +27,8 @@ class StripController extends Controller
 
         $strip = $this->getDoctrine()
                 ->getRepository(Strip::class)
-                ->findAuthors($strip);
+                ->findStrip($strip);
 
-//        dump($strip);
-//        die();
         return $this->render('strip/display.html.twig', [
                     'strip' => $strip,
         ]);

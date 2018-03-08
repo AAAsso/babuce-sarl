@@ -23,10 +23,12 @@
                     <td>{{ strip.creationDate|date('Y-m-d H:i:s') }}</td>
                     <td>{{ strip.publicationDate|date('Y-m-d H:i:s') }}</td>
                     <td>{{ strip.title }}</td>
-                    <td>{{ strip.author }}</td>
+                    <td>
+                        <a href="{{ path('account_show', { 'slug': strip.author.slug }) }}">{{ strip.author.username }}</a> 
+                    </td>
                     <td>
                         {% for contentWarning in strip.contentWarnings%} 
-                            <a href="{{ path('contentwarning_show', { 'label': contentWarning.label }) }}">{{ contentWarning.label }}</a> 
+                            <a href="{{ path('contentwarning_show', { 'slug': contentWarning.slug }) }}">{{ contentWarning.slug }}</a> 
                         {% endfor %}
                     </td>
                     <td>{{ strip.stripElements|join(', ') }}</td>

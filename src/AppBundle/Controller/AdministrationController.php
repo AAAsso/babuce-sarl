@@ -17,6 +17,7 @@ use AppBundle\Entity\Strip;
  */
 class AdministrationController extends Controller
 {
+
     const ACCESS_DENIED_MESSAGE = 'Access denied';
 
     /*
@@ -46,7 +47,7 @@ class AdministrationController extends Controller
         $accounts = $em->getRepository('AppBundle:Account')->findAll();
 
         return $this->render('account/list.html.twig', [
-                'accounts' => $accounts,
+                    'accounts' => $accounts,
         ]);
     }
 
@@ -84,8 +85,8 @@ class AdministrationController extends Controller
         }
 
         return $this->render('contentwarning/list.html.twig', [
-                'contentWarnings' => $contentWarnings,
-                'delete_forms' => $deleteForms,
+                    'contentWarnings' => $contentWarnings,
+                    'delete_forms' => $deleteForms,
         ]);
     }
 
@@ -107,7 +108,7 @@ class AdministrationController extends Controller
         }
 
         return $this->render('contentwarning/administration-show.html.twig', [
-                'contentWarning' => $contentWarning,
+                    'contentWarning' => $contentWarning,
         ]);
     }
 
@@ -144,8 +145,8 @@ class AdministrationController extends Controller
         }
 
         return $this->render('contentwarning/new.html.twig', [
-                'contentWarning' => $contentWarning,
-                'form' => $form->createView(),
+                    'contentWarning' => $contentWarning,
+                    'form' => $form->createView(),
         ]);
     }
 
@@ -178,9 +179,9 @@ class AdministrationController extends Controller
         }
 
         return $this->render('contentwarning/edit.html.twig', [
-                'contentWarning' => $contentWarning,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
+                    'contentWarning' => $contentWarning,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -226,9 +227,9 @@ class AdministrationController extends Controller
     private function createContentWarningDeleteForm(ContentWarning $contentWarning)
     {
         return $this->createFormBuilder()
-                ->setAction($this->generateUrl('contentwarning_delete', ['slug' => $contentWarning->getSlug()]))
-                ->setMethod('DELETE')
-                ->getForm()
+                        ->setAction($this->generateUrl('contentwarning_delete', ['slug' => $contentWarning->getSlug()]))
+                        ->setMethod('DELETE')
+                        ->getForm()
         ;
     }
 
@@ -259,7 +260,7 @@ class AdministrationController extends Controller
         $strips = $em->getRepository('AppBundle:Strip')->findAll();
 
         return $this->render('strip/list.html.twig', [
-                'strips' => $strips,
+                    'strips' => $strips,
         ]);
     }
 
@@ -272,7 +273,10 @@ class AdministrationController extends Controller
     public function newStripAction(Request $request)
     {
         $session = $request->getSession();
-        $connectedUser = $session->get('account');
+
+        $idConnected = $session->get('account')->getId();
+        $em = $this->getDoctrine()->getManager();
+        $connectedUser = $em->getRepository('AppBundle:Account')->find($idConnected);
 
         if ($this->userHasAccessRights($connectedUser) === false)
         {
@@ -299,12 +303,14 @@ class AdministrationController extends Controller
                 array_push($filenames, $name);
                 // Is moving image in loop going to break the loop ?
                 $image->move(
-                    $this->getParameter('strips_directory'), $name
+                        $this->getParameter('strips_directory'), $name
                 );
             }
             $strip->setStripElements($filenames);
 
-            $account->getStrips()->add($strip);
+
+
+            $connectedUser->getStrips()->add($strip);
             $strip->setAuthor($connectedUser);
 
             $em->persist($strip);
@@ -315,15 +321,15 @@ class AdministrationController extends Controller
         }
 
         return $this->render('strip/new.html.twig', [
-                'strip' => $strip,
-                'form' => $form->createView(),
+                    'strip' => $strip,
+                    'form' => $form->createView(),
         ]);
     }
 
     /**
      * Finds and displays a strip entity.
      *
-     * @Route("strips/{id}", name="strip_show")
+     * @Route("/strip/{id}", name="strip_show")
      * @Method("GET")
      */
     public function showStripAction(Request $request, Strip $strip)
@@ -339,9 +345,13 @@ class AdministrationController extends Controller
 
         $deleteForm = $this->createDeleteForm($strip);
 
+        $strip = $this->getDoctrine()
+                ->getRepository(Strip::class)
+                ->findStrip($strip);
+
         return $this->render('strip/show.html.twig', [
-                'strip' => $strip,
-                'delete_form' => $deleteForm->createView(),
+                    'strip' => $strip,
+                    'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -374,9 +384,9 @@ class AdministrationController extends Controller
         }
 
         return $this->render('strip/edit.html.twig', [
-                'strip' => $strip,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
+                    'strip' => $strip,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -420,9 +430,9 @@ class AdministrationController extends Controller
     private function createDeleteForm(Strip $strip)
     {
         return $this->createFormBuilder()
-                ->setAction($this->generateUrl('strip_delete', ['id' => $strip->getId()]))
-                ->setMethod('DELETE')
-                ->getForm()
+                        ->setAction($this->generateUrl('strip_delete', ['id' => $strip->getId()]))
+                        ->setMethod('DELETE')
+                        ->getForm()
         ;
     }
 

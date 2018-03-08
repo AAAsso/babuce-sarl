@@ -11,7 +11,7 @@ namespace AppBundle\Repository;
 class StripRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function findAuthors($strip)
+    public function findStrip($strip)
     {
         $query = $this->getEntityManager()
                 ->createQuery(
