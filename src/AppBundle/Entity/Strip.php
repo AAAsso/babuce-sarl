@@ -56,7 +56,7 @@ class Strip
     /**
      * @var array
      * 
-     * @ORM\ManyToMany(targetEntity="ContentWarning")
+     * @ORM\ManyToMany(targetEntity="ContentWarning", inversedBy="strips")
      * @ORM\JoinTable(name="strips_contentWarnings")
      */
     private $contentWarnings;
