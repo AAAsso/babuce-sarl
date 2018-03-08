@@ -417,7 +417,7 @@ class AdministrationController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('strip_index');
+        return $this->redirectToRoute('strip_list');
     }
 
     /**
