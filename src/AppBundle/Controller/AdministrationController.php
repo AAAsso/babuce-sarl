@@ -115,7 +115,7 @@ class AdministrationController extends Controller
     /**
      * Creates a new contentWarning entity.
      *
-     * @Route("/contentwarnings/new", name="contentwarning_new")
+     * @Route("/contentwarning/new", name="contentwarning_new")
      * @Method({"GET", "POST"})
      */
     public function newContentWarningAction(Request $request)
@@ -153,7 +153,7 @@ class AdministrationController extends Controller
     /**
      * Displays a form to edit an existing contentWarning entity.
      *
-     * @Route("/contentwarnings/{slug}/edit", name="contentwarning_edit")
+     * @Route("/contentwarning/{slug}/edit", name="contentwarning_edit")
      * @Method({"GET", "POST"})
      */
     public function editContentWarningAction(Request $request, ContentWarning $contentWarning)
@@ -188,7 +188,7 @@ class AdministrationController extends Controller
     /**
      * Deletes a contentWarning entity.
      *
-     * @Route("/contentwarnings/{slug}", name="contentwarning_delete")
+     * @Route("/contentwarning/{slug}", name="contentwarning_delete")
      * @Method("DELETE")
      */
     public function deleteContentWarningAction(Request $request, ContentWarning $contentWarning)
@@ -267,7 +267,7 @@ class AdministrationController extends Controller
     /**
      * Creates a new strip entity.
      *
-     * @Route("/strips/new", name="strip_new")
+     * @Route("/strip/new", name="strip_new")
      * @Method({"GET", "POST"})
      */
     public function newStripAction(Request $request)
@@ -358,7 +358,7 @@ class AdministrationController extends Controller
     /**
      * Displays a form to edit an existing strip entity.
      *
-     * @Route("/strips/{id}/edit", name="strip_edit")
+     * @Route("/strip/{id}/edit", name="strip_edit")
      * @Method({"GET", "POST"})
      */
     public function editStripAction(Request $request, Strip $strip)
@@ -393,7 +393,7 @@ class AdministrationController extends Controller
     /**
      * Deletes a strip entity.
      *
-     * @Route("/strips/{id}", name="strip_delete")
+     * @Route("/strip/{id}", name="strip_delete")
      * @Method("DELETE")
      */
     public function deleteStripAction(Request $request, Strip $strip)

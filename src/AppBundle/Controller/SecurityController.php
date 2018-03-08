@@ -12,6 +12,7 @@ class SecurityController extends Controller
     
     /**
      * @Route("/login", name="login")
+     * @Method({"GET", "POST"})
      */
     public function loginAction(Request $request)
     {
@@ -52,6 +53,7 @@ class SecurityController extends Controller
     
     /**
      * @Route("/firstlogin", name="firstlogin")
+     * @Method({"GET"})
      */
     public function firstloginAction(Request $request, Account $account)
     {
@@ -72,6 +74,7 @@ class SecurityController extends Controller
 
     /**
      * @Route("/logout", name="logout")
+     * @Method({"GET"})
      */
     public function logoutAction(Request $request)
     {
