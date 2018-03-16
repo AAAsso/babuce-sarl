@@ -154,7 +154,7 @@ class AccountController extends Controller
             return $this->redirectToRoute('succubesarl');
         }
 
-        return $this->redirectToRoute('account_edit');
+        return $this->redirectToRoute('account_edit', ['slug' => $account->getSlug()]);
     }
 
     private function handleGeneralInformationForm(Request $request, $editAccountGeneralInformationForm)
